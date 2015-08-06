@@ -3,86 +3,69 @@ var storage = require('../utils/Storage');
 module.exports = {
 	init: function () {
 		storage.clear();
-		storage.setItem('collaborators', [{
-			"id": 1,
-			"name": "All Categories",
-			"cols": [1, 2, 3, "5%", "60%"],
-			"edit": false,
-			"children": [
-				{
-				  "id": 2,
-				  "name": "For Sale",
-				  "cols": [1, 2, 3, "5%", "60%"],
-				  "edit": false,
-				  "children": [
-				    {
-				      "id": 4,
-				      "name": "Baby & Kids Stuff",
-				      "cols": [1, 2, 3, "5%", "60%"],
-				      "edit": false,
-				    },
-				    {
-				      "id": 5,
-				      "name": "Music, Films, Books & Games",
-				      "cols": [1, 2, 3, "5%", "60%"],
-				      "edit": false,
-				    }
-				  ]
-				},
+		storage.setItem('collaborators', [
+			{
+			  "id": 2,
+			  "cols": ["For Sale", 1, 2, 3, "5%", "60%"],
+			  "edit": [3],
+			  "children": [
 			    {
-			      "id": 6,
-			      "name": "Motors",
-			      "cols": [1, 2, 3, "5%", "60%"],
-			      "edit": false,
-			      "children": [
-			        {
-			          "id": 7,
-			          "name": "Car Parts & Accessories",
-			          "cols": [1, 2, 3, "5%", "60%"],
-			          "edit": false,
-			        },
-			        {
-			          "id": 8,
-			          "name": "Cars",
-			          "cols": [1, 2, 3, "5%", "60%"],
-			          "edit": false,
-			        },
-			        {
-			          "id": 10016,
-			          "name": "Motorbike Parts & Accessories",
-			          "cols": [1, 2, 3, "5%", "60%"],
-			          "edit": false,
-			        }
-			      ]
+			      "id": 4,
+			      "cols": ["Baby & Kids Stuff", 1, 2, 3, "5%", "60%"],
+			      "edit": [3]
 			    },
 			    {
-			      "id": 9,
-			      "name": "Jobs",
-			      "cols": [1, 2, 3, "5%", "60%"],
-			      "edit": false,
-			      "children": [
-			        {
-			          "id": 10,
-			          "name": "Accountancy",
-			          "cols": [1, 2, 3, "5%", "60%"],
-			          "edit": false,
-			        },
-			        {
-			          "id": 11,
-			          "name": "Financial Services & Insurance",
-			          "cols": [1, 2, 3, "5%", "60%"],
-			          "edit": false,
-			        },
-			        {
-			          "id": 12,
-			          "name": "Bar Staff & Management",
-			          "cols": [1, 2, 3, "5%", "60%"],
-			          "edit": false,
-			        }
-			      ]
+			      "id": 5,
+			      "cols": ["Music, Films, Books & Games", 1, 2, 3, "5%", "60%"],
+			      "edit": [3]
 			    }
-			]
-		}]);
+			  ]
+			},
+		    {
+		      "id": 6,
+		      "cols": ["Motors", 1, 2, 3, "5%", "60%"],
+		      "edit": [3],
+		      "children": [
+		        {
+		          "id": 7,
+		          "cols": ["Car Parts & Accessories", 1, 2, 3, "5%", "60%"],
+		          "edit": [3]
+		        },
+		        {
+		          "id": 8,
+		          "cols": ["Cars", 1, 2, 3, "5%", "60%"],
+		          "edit": [3]
+		        },
+		        {
+		          "id": 10016,
+		          "cols": ["Motorbike Parts & Accessories", 1, 2, 3, "5%", "60%"],
+		          "edit": [3]
+		        }
+		      ]
+		    },
+		    {
+		      "id": 9,
+		      "cols": ["Jobs", 1, 2, 3, "5%", "60%"],
+		      "edit": [3],
+		      "children": [
+		        {
+		          "id": 10,
+		          "cols": ["Accountancy", 1, 2, 3, "5%", "60%"],
+		          "edit": [3]
+		        },
+		        {
+		          "id": 11,
+		          "cols": ["Financial Services & Insurance", 1, 2, 3, "5%", "60%"],
+		          "edit": [3]
+		        },
+		        {
+		          "id": 12,
+		          "cols": ["Bar Staff & Management", 1, 2, 3, "5%", "60%"],
+		          "edit": [3]
+		        }
+		      ]
+		    }
+		]);
 	}
 }
 

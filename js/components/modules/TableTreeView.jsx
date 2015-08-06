@@ -7,7 +7,7 @@ var TreeNode = React.createClass({
 	},
 
 	turnNode: function(){
-		this.setState({children: null});
+		this.setState({ children: null });
 	},
 
 	getInitialState: function(){
@@ -46,10 +46,11 @@ var TreeNode = React.createClass({
             'closed': (this.state.children ? false : true)
         });
 
+    	var name = this.props.data.cols[0] || '';
         return (
             <li className={classes} onClick={this.onChildDisplayToggle}>
                 <a onClick={this.onCategorySelect}>
-                    {this.props.data.name}
+                    {name}
                 </a>
                 <ul>
                 	{this.state.children.map(function(child, index) {
@@ -67,7 +68,7 @@ var CategoryTree = React.createClass({
         return { data: [] };
     },
 
-    getDefaultProps:function() {
+    getDefaultProps: function() {
     	return {
     		isExpand: false
     	}
@@ -79,11 +80,26 @@ var CategoryTree = React.createClass({
 
     render: function() {
         return (
-            <ul className="category-tree">
-            	{this.props.data.map(function(tree) {
-		    		return <TreeNode key={tree.id} data={tree} isExpand={this.props.isExpand}/>
-		    	}.bind(this))}
-            </ul>
+        	<div className="table-container">
+        		<div className="header">
+					<ul className="raiting-table__header">
+						{this.props.header.map(function(h, index){
+							return <li key={"hli" + index} className={"data" + (index + 1)}><span>{h}</span></li>
+						})}
+					</ul>
+				</div>
+				<div className="raiting-table--scroll">
+					<table className="raiting-table__body">
+						<tbody>
+				            <ul className="category-tree">
+				            	{this.props.data.map(function(tree) {
+						    		return <TreeNode key={tree.id} data={tree} isExpand={this.props.isExpand}/>
+						    	}.bind(this))}
+				            </ul>
+				        </tbody>
+				    </table>
+				</div>
+	        </div>
         );
     }
 });
