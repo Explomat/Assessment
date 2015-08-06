@@ -47,21 +47,32 @@
 }
 .table-container .raiting-table__body{
 	width: 100%;
+	display: table;
 }
 td:not(:nth-of-type(2)){
 	text-align: center;
 }
 
-.table-container .raiting-table__body tbody tr{
+.table-container .raiting-table__body ul,
+.table-container .raiting-table__body div{
 	height: 3em;
-
+	display: table;
 	background: #FFF;
+	width: 100%;
 }
-.table-container .raiting-table__body tbody tr:nth-child(2n){
+.table-container .raiting-table__body div{
+	height: 0;
+}
+.table-container .raiting-table__body li{
+	display: table-cell;
+	vertical-align: middle;
+}
+.table-container .raiting-table__body ul:nth-child(2n){
 	background: #C2FDC8;
 }
-:not([class='data1'])[class^='data']{
+.data2,.data3,.data4,.data5,.data6{
 	width: 13%;
+	text-align: center;
 }
 .data1{
 	width: 35%;

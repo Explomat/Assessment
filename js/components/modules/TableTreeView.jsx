@@ -23,11 +23,6 @@ var TreeNode = React.createClass({
 	    	this.turnNode();
     },
 
-    onCategorySelect: function(e){
-    	e.preventDefault();
-	    e.stopPropagation();
-    },
-
     onChildDisplayToggle: function(e){
     	if (this.state.children.length === 0)
     		this.expandNode();
@@ -48,16 +43,20 @@ var TreeNode = React.createClass({
 
     	var name = this.props.data.cols[0] || '';
         return (
-            <li className={classes} onClick={this.onChildDisplayToggle}>
-                <a onClick={this.onCategorySelect}>
-                    {name}
-                </a>
-                <ul>
+        	<div className="raiting-table__body">
+        		<ul>
+		            {this.props.data.cols.map(function(c, index){
+		            	return <li className={classes + " data" + (index + 1)} onClick={this.onChildDisplayToggle}>
+			                		<a>{c}</a>
+			           			</li>
+		            }.bind(this))}
+	            </ul>
+                <div>
                 	{this.state.children.map(function(child, index) {
 				    	return <TreeNode key={child.id + index} data={child} isExpand={this.props.isExpand}/>;
 				    }.bind(this))}
-                </ul>
-            </li>
+                </div>
+            </div>
         );
     }
 });
@@ -88,20 +87,16 @@ var CategoryTree = React.createClass({
 						})}
 					</ul>
 				</div>
-				<div className="raiting-table--scroll">
-					<table className="raiting-table__body">
-						<tbody>
-				            <ul className="category-tree">
-				            	{this.props.data.map(function(tree) {
-						    		return <TreeNode key={tree.id} data={tree} isExpand={this.props.isExpand}/>
-						    	}.bind(this))}
-				            </ul>
-				        </tbody>
-				    </table>
-				</div>
+
+					<div className="raiting-table--scroll category-tree">
+		            	{this.props.data.map(function(tree) {
+				    		return <TreeNode key={tree.id} data={tree} isExpand={this.props.isExpand}/>
+				    	}.bind(this))}
+				    </div>
 	        </div>
         );
     }
 });
 module.exports = CategoryTree;
+
 
