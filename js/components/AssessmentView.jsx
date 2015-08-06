@@ -1,6 +1,7 @@
 var React = require('react');
 var AssessmentStore = require('../stores/AssessmentStore');
 var AssessmentActions = require('../actions/AssessmentActions');
+var TableTreeView = require('./modules/TableTreeView');
 
 function getData() {
 	return {
@@ -106,7 +107,7 @@ var AssessmentView = React.createClass({
 				<div className="panel-heading">
 				</div>
 				<div className="panel-body">	
-
+					<TableTreeView data={this.state.collaborators} isExpand={false}/>
 				</div>
 			</div>
 		);

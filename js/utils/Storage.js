@@ -1,6 +1,6 @@
 function Storage() {
 	var _storage = window.sessionStorage || window.localStorage;
-	var _root = 'tests';
+	var _root = 'assessment';
 
 	this.clear = function() {
 		_storage.clear();

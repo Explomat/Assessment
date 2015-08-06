@@ -1,4 +1,5 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
+var ServerConstants = require('../constants/ServerConstants');
 var EventEmitter = require('events').EventEmitter;
 var AssessmentConstants = require('../constants/AssessmentConstants');
 var extend = require('extend-object');
@@ -6,16 +7,16 @@ var extend = require('extend-object');
 var _data = {}, _collaborators = [];
 
 function loadAssessmentData(data) {
-	_data = data;
-	_collaborators = data.subordinates;
+	_collaborators = data;
+	//_collaborators = data.collaborators;
 }
 
 function setSubordinates(){
-	_collaborators = data.subordinates;
+	//_collaborators = data.subordinates;
 }
 
 function setSubdivision(){
-	_collaborators = data.subdivision;
+	//_collaborators = data.subdivision;
 }
 
 var AssessmentStore = extend({}, EventEmitter.prototype, {

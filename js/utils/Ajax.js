@@ -1,18 +1,17 @@
 var Promise = require('es6-promise').Promise;
-var QuestionData = require('../data/QuestionData');
-var StructureData = require('../data/StructureData');
+var AssessmentData = require('../data/AssessmentData');
 var Storage = require('./Storage');
 var AJAX_TIME_OVER = 10000;
 
 module.exports = {
 
-    getQuestionData: function() {
+    getData: function() {
         return new Promise(function(resolve, reject){
-            QuestionData.init();
+            AssessmentData.init();
 
             //imitatation loading
             setTimeout(function(){
-                resolve(Storage.getItem('question'));
+                resolve(Storage.getItem('collaborators'));
             }, 100);
         });
     },
@@ -27,17 +26,6 @@ module.exports = {
         });
     },
 
-    getStructureData: function() {
-        return new Promise(function(resolve, reject){
-            StructureData.init();
-
-            //imitatation loading
-            setTimeout(function(){
-                resolve(Storage.getItem('structure'));
-            }, 100);
-        });
-    },
-
     getXmlHttp: function(){
         var xmlHttp;
         try { xmlHttp = new ActiveXObject("Msxml2.XMLHTTP"); }
@@ -48,31 +36,6 @@ module.exports = {
         if (!xmlHttp && typeof(XMLHttpRequest) != 'undefined')
             xmlHttp = new XMLHttpRequest();
         return xmlHttp;
-    },
-
-    uploadFiles: function(eventTarget, url) {
-        return new Promise(function(resolve, reject){
-            if (!url)
-                reject(Error("Unknown url"));
-            var files = FileAPI.getFiles(eventTarget);
-            clearTimeout(timeout);
-            var xmlHttp = FileAPI.upload({
-                url: url,
-                files: { file_upload: files },
-                complete: function (err, xhr){
-                    if (err){
-                        reject(err);
-                    }
-                    else {
-                        resolve(JSON.parse(xhr.responseText));
-                    }
-                }
-            });
-             var timeout = setTimeout( function(){ 
-                xmlHttp.abort();
-                reject("Upload file time over");
-            }, AJAX_TIME_OVER);
-        });
     },
 
     sendRequest: function(url, data, isSync, xmlHttpRequest, requestType) {
