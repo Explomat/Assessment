@@ -16,6 +16,18 @@ var TreeNode = React.createClass({
 		}
 	},
 
+	componentWillReceiveProps: function(nextProps) {
+	  this.setState({children: nextProps.children});
+	  if (nextProps.isExpand !== this.props.isExpand){
+	  	if (nextProps.isExpand){
+	  		this.expandNode();
+	  	}
+	  	else{
+	  		this.turnNode();
+	  	}
+	  }
+	},
+
     componentDidMount: function(){
     	if (this.props.isExpand)
 	    	this.expandNode();
@@ -62,19 +74,12 @@ var TreeNode = React.createClass({
 
 var CategoryTree = React.createClass({
 
-	getInitialState: function() {
-        return { data: [] };
-    },
-
     getDefaultProps: function() {
     	return {
-    		isExpand: false
+    		isExpand: false,
+    		data: []
     	}
     },
-
-	componentWillMount: function() {
-		this.setState( {data: this.props.data} );
-	},
 
     render: function() {
         return (

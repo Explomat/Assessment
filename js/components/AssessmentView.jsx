@@ -5,11 +5,18 @@ var TableTreeView = require('./modules/TableTreeView');
 
 function getData() {
 	return {
-		collaborators: AssessmentStore.getCollaborators()
+		collaborators: AssessmentStore.getCollaborators(),
+		isExpand: false
 	};
 }
 
 var TopMenu = React.createClass({
+
+	handleExpandAll: function() {
+		if (this.props.handleExpandAll){
+			this.props.handleExpandAll();
+		}
+	},
 
 	handleSetSubordinates: function() {
 		AssessmentActions.setSubordinates();
@@ -20,13 +27,25 @@ var TopMenu = React.createClass({
 	},
 
 	render: function() {
+		var displayPlus = { display : this.props.isExpand ? "none" : "block" };
+		var displayMinus = { display : this.props.isExpand ? "block" : "none" };
 		return (
-			<div className="pull-left">
-				<button type="button" className="btn btn-default btn-sm" onClick={this.handleSetSubordinates}>
-					<span>Моя команда</span>
+			<div className="clearfix">
+				<div className="pull-left">
+					<button type="button" className="btn btn-default btn-sm" onClick={this.handleSetSubordinates}>
+						<span>Моя команда</span>
+					</button>
+					<button type="button" className="btn btn-default btn-sm" onClick={this.handleSetSubdivision}>
+						<span>Мое подразделение</span>
+					</button>
+				</div>
+				<button type="button" style={displayPlus} className="btn btn-default btn-sm pull-right" onClick={this.handleExpandAll}>
+					<span className="glyphicon glyphicon-plus"></span>
+					<span>&nbsp;Раскрыть всех</span>
 				</button>
-				<button type="button" className="btn btn-default btn-sm" onClick={this.handleSetSubdivision}>
-					<span>Мое подразделение</span>
+				<button type="button" style={displayMinus} className="btn btn-default btn-sm pull-right" onClick={this.handleExpandAll}>
+					<span className="glyphicon glyphicon-minus"></span>
+					<span>&nbsp;Свернуть всех</span>
 				</button>
 			</div>
 		);
@@ -85,15 +104,15 @@ var DownMenuSecond = React.createClass({
 
 var AssessmentView = React.createClass({
 
-	componentDidMount:function() {
+	componentDidMount: function() {
 		AssessmentStore.addChangeListener(this._onChange);
 	},
 
-	componentWillUnmount:function() {
+	componentWillUnmount: function() {
 		AssessmentStore.removeChangeListener(this._onChange);
 	},
 
-	_onChange:function() {
+	_onChange: function() {
 		this.setState(getData());
 	},
 
@@ -101,14 +120,18 @@ var AssessmentView = React.createClass({
 		return getData();
 	},
 
+	handleExpandAll: function(){
+		this.setState({isExpand: !this.state.isExpand});
+	},
+
 	render:function () {
 		return (
 			<div className="panel panel-default">
 				<div className="panel-heading">
-					<TopMenu />
+					<TopMenu handleExpandAll={this.handleExpandAll} isExpand={this.state.isExpand}/>
 				</div>
 				<div className="panel-body">	
-					<TableTreeView data={this.state.collaborators} isExpand={false} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт', 'План']}/>
+					<TableTreeView data={this.state.collaborators} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт', 'План']}/>
 				</div>
 			</div>
 		);

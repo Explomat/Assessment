@@ -4,27 +4,25 @@ var EventEmitter = require('events').EventEmitter;
 var AssessmentConstants = require('../constants/AssessmentConstants');
 var extend = require('extend-object');
 
-var _data = {}, _collaborators = [];
+var _data = {}, _collaborators = [], _subordinates = [];
 
 function loadAssessmentData(data) {
+	_data = data;
 	_collaborators = data;
+	var temp = JSON.parse(JSON.stringify(_collaborators));
+	temp.forEach(function(s){
+		delete s['children'];
+	})
+	_subordinates = temp;
 	//_collaborators = data.collaborators;
 }
 
 function setSubordinates(){
-	/*_collaborators = _collaborators.map(function(col){
-		delete col['children'];
-	});*/
-
-	for (var i = _collaborators.length - 1; i >= 0; i--) {
-		delete _collaborators[i]['children'];
-	};
-
-	var a = _collaborators;
+	_collaborators = _subordinates;
 }
 
 function setSubdivision(){
-	_collaborators = _collaborators;
+	_collaborators = _data;
 }
 
 var AssessmentStore = extend({}, EventEmitter.prototype, {
