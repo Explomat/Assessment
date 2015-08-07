@@ -55,7 +55,7 @@ var TreeNode = React.createClass({
 
         return (
         	<div className="raiting-table__body">
-        		<ul>
+        		<ul className="raiting-table__row">
 		            {this.props.data.cols.map(function(c, index){
 		            	return <li key={index} className={classes + " data" + (index + 1)} onClick={this.onChildDisplayToggle}>
 			                		<a>{c}</a>

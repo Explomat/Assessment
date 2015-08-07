@@ -1,10 +1,8 @@
 
 .table-container{
 	position: relative;
-	min-width: 700px;
-	max-width: 100%;
 	margin: 0 auto;
-	border: 2px solid #7ECC74;
+	width: 100%;
 }
 .table-container .header{
 	font-weight: bold;
@@ -18,6 +16,9 @@
 
 	color: #4B4B4B;
 	background: #7ECC74;
+}
+div.panel-body{
+	padding:0;
 }
 .table-container .raiting-table__header{
 	display: table-row;
@@ -51,21 +52,25 @@ td:not(:nth-of-type(2)){
 }
 .table-container .raiting-table__body ul,
 .table-container .raiting-table__body div{
-	height: 3em;
+	height: 2.5em;
 	display: table;
-	background: #FFF;
 	width: 100%;
+	margin:0;
+	padding:0;
+}
+div.raiting-table__body ul:nth-child(2n){
+	background: #B6FCD0;
 }
 .table-container .raiting-table__body div{
 	height: 0;
 }
-.table-container .raiting-table__body li{
+.table-container div.raiting-table__body li{
 	display: table-cell;
 	vertical-align: middle;
 }
-.table-container .raiting-table__body ul:nth-child(2n){
+/* .table-container .raiting-table__body:nth-child(2n){
 	background: #C2FDC8;
-}
+} */
 .data2,.data3,.data4,.data5,.data6{
 	width: 13%;
 	text-align: center;
