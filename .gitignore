@@ -2,5 +2,4 @@ node_modules/
 js/components/.module-cache/
 js/components/*.js
 js/components/modules/*.js
-build/js/bundle.js
 build/js/bundle.js.map
