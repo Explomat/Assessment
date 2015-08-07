@@ -39,13 +39,11 @@ var TopMenu = React.createClass({
 						<span>Мое подразделение</span>
 					</button>
 				</div>
-				<button type="button" style={displayPlus} className="btn btn-default btn-sm pull-right" onClick={this.handleExpandAll}>
+				<button title="Раскрыть всех" type="button" style={displayPlus} className="btn btn-default btn-sm pull-right" onClick={this.handleExpandAll}>
 					<span className="glyphicon glyphicon-plus"></span>
-					<span>&nbsp;Раскрыть всех</span>
 				</button>
-				<button type="button" style={displayMinus} className="btn btn-default btn-sm pull-right" onClick={this.handleExpandAll}>
+				<button title="Свернуть всех" type="button" style={displayMinus} className="btn btn-default btn-sm pull-right" onClick={this.handleExpandAll}>
 					<span className="glyphicon glyphicon-minus"></span>
-					<span>&nbsp;Свернуть всех</span>
 				</button>
 			</div>
 		);

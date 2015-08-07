@@ -6,68 +6,73 @@ var AssessmentView = require('./components/AssessmentView');
 window.onload = function () {
 	var app = document.getElementById('app');
 
-	/*AssessmentActions.receiveData([{
-		"id": 1,
-		"name": "All Categories",
-		"cols": [1, 2, 3, "5%", "60%"],
-		"children": [
+	AssessmentActions.receiveData([
 			{
 			  "id": 2,
-			  "name": "For Sale",
-			  "cols": [1, 2, 3, "5%", "60%"],
+			  "cols": ["For Sale", 1, 2, 3, "5%", "60%"],
+			  "edit": [3],
 			  "children": [
 			    {
 			      "id": 4,
-			      "name": "Baby & Kids Stuff",
-			      "cols": [1, 2, 3, "5%", "60%"],
+			      "cols": ["Baby & Kids Stuff", 1, 2, 3, "5%", "60%"],
+			      "edit": [3]
 			    },
 			    {
 			      "id": 5,
-			      "name": "Music, Films, Books & Games",
-			      "cols": [1, 2, 3, "5%", "60%"],
+			      "cols": ["Music, Films, Books & Games", 1, 2, 3, "5%", "60%"],
+			      "edit": [3]
 			    }
 			  ]
 			},
 		    {
+		      "id": 6,
+		      "cols": ["Motors", 1, 2, 3, "5%", "60%"],
+		      "edit": [3],
+		      "children": [
+		        {
+		          "id": 7,
+		          "cols": ["Car Parts & Accessories", 1, 2, 3, "5%", "60%"],
+		          "edit": [3]
+		        },
+		        {
+		          "id": 8,
+		          "cols": ["Cars", 1, 2, 3, "5%", "60%"],
+		          "edit": [3]
+		        },
+		        {
+		          "id": 10016,
+		          "cols": ["Motorbike Parts & Accessories", 1, 2, 3, "5%", "60%"],
+		          "edit": [3]
+		        }
+		      ]
+		    },
+		    {
 		      "id": 9,
-		      "name": "Jobs",
-		      "cols": [1, 2, 3, "5%", "60%"],
+		      "cols": ["Jobs", 1, 2, 3, "5%", "60%"],
+		      "edit": [3],
 		      "children": [
 		        {
 		          "id": 10,
-		          "name": "Accountancy",
-		          "cols": [1, 2, 3, "5%", "60%"],
+		          "cols": ["Accountancy", 1, 2, 3, "5%", "60%"],
+		          "edit": [3]
 		        },
 		        {
 		          "id": 11,
-		          "name": "Financial Services & Insurance",
-		          "cols": [1, 2, 3, "5%", "60%"],
+		          "cols": ["Financial Services & Insurance", 1, 2, 3, "5%", "60%"],
+		          "edit": [3]
 		        },
 		        {
 		          "id": 12,
-		          "name": "Bar Staff & Management",
-		          "cols": [1, 2, 3, "5%", "60%"],
+		          "cols": ["Bar Staff & Management", 1, 2, 3, "5%", "60%"],
+		          "edit": [3]
 		        }
 		      ]
 		    }
-		]
-	},
-	{
-		"id": 123321,
-		"name": "TESTS",
-		"cols": [1, 2, 3, "5%", "60%"],
-		"children": [
-			{
-				"id": 53464376437,
-				"name": "For Sale",
-				"cols": [1, 2, 3, "5%", "60%"]
-			}
-		]
-	}]);
-	React.render(React.createElement(AssessmentView), app);*/
+		]);
+	React.render(React.createElement(AssessmentView), app);
 
-	AssessmentAPI.getData().then(function(data){
+	/*AssessmentAPI.getData().then(function(data){
 		AssessmentActions.receiveData(data);
 		React.render(React.createElement(AssessmentView), app);
-	});
+	});*/
 }

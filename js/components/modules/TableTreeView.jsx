@@ -1,4 +1,15 @@
 var React = require('react/addons');
+var TextView = require('./Text').TextView;
+var Validation = require('../../utils/Validation');
+
+function isEditCol(arrayEdit, index){
+	var isEdit = false;
+	arrayEdit.forEach(function(item){
+		if (item == index)
+			isEdit = true;
+	});
+	return isEdit;
+}
 
 var TreeNode = React.createClass({
 
@@ -44,6 +55,12 @@ var TreeNode = React.createClass({
 	    e.stopPropagation();
     },
 
+    changeColValue: function(a){
+    	if (this.props.changeColValue){
+    		this.props.changeColValue();
+    	}
+    },
+
     render: function () {
     	if (!this.state.children) this.state.children = [];
 
@@ -53,14 +70,26 @@ var TreeNode = React.createClass({
             'closed': (this.state.children ? false : true)
         });
 
+    	var name = this.props.data.cols[0];
+    	var elems = [];
+
+    	for (var i = this.props.data.cols.length - 1; i >= 1; i--) {
+			if (isEditCol(this.props.data.edit, i)){
+				elems.push(<li key={i} className={classes + " data" + (i + 2)}>
+	                			<TextView value={this.props.data.cols[i]} isValid={Validation.isNumber} onBlur={this.changeColValue}/>
+	           				</li>);
+			}
+			else {
+				elems.push(<li key={i} className={classes + " data" + (i + 2)}>
+	                			<a>{this.props.data.cols[i]}</a>
+	           				</li>);
+			}
+		} 
         return (
         	<div className="raiting-table__body">
         		<ul className="raiting-table__row">
-		            {this.props.data.cols.map(function(c, index){
-		            	return <li key={index} className={classes + " data" + (index + 1)} onClick={this.onChildDisplayToggle}>
-			                		<a>{c}</a>
-			           			</li>
-		            }.bind(this))}
+        			<li key={0} className={classes + " data1"} onClick={this.onChildDisplayToggle}><a>{name}</a></li>
+		            {elems}
 	            </ul>
                 <div>
                 	{this.state.children.map(function(child, index) {
@@ -91,12 +120,11 @@ var CategoryTree = React.createClass({
 						})}
 					</ul>
 				</div>
-
-					<div className="raiting-table--scroll category-tree">
-		            	{this.props.data.map(function(tree) {
-				    		return <TreeNode key={tree.id} data={tree} isExpand={this.props.isExpand}/>
-				    	}.bind(this))}
-				    </div>
+				<div className="raiting-table--scroll category-tree">
+	            	{this.props.data.map(function(tree) {
+			    		return <TreeNode key={tree.id} data={tree} isExpand={this.props.isExpand}/>
+			    	}.bind(this))}
+			    </div>
 	        </div>
         );
     }
