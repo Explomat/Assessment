@@ -6,15 +6,10 @@ var AssessmentAPI = require('../api/AssessmentAPI');
 var AssessmentActions = {
 
 	receiveData: function(data) {
-		try {
-			AppDispatcher.handleData({
-				actionType: ServerConstants.RECEIVE_DATA,
-				data: data
-			});
-		}
-		catch(e){
-			log(e);
-		}
+		AppDispatcher.handleData({
+			actionType: ServerConstants.RECEIVE_DATA,
+			data: data
+		});
 	},
 
 	setSubordinates: function() {

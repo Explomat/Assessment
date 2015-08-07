@@ -41,12 +41,11 @@ var TreeNode = React.createClass({
             'closed': (this.state.children ? false : true)
         });
 
-    	var name = this.props.data.cols[0] || '';
         return (
         	<div className="raiting-table__body">
         		<ul>
 		            {this.props.data.cols.map(function(c, index){
-		            	return <li className={classes + " data" + (index + 1)} onClick={this.onChildDisplayToggle}>
+		            	return <li key={index} className={classes + " data" + (index + 1)} onClick={this.onChildDisplayToggle}>
 			                		<a>{c}</a>
 			           			</li>
 		            }.bind(this))}
@@ -74,7 +73,7 @@ var CategoryTree = React.createClass({
     },
 
 	componentWillMount: function() {
-		this.setState({data: this.props.data});
+		this.setState( {data: this.props.data} );
 	},
 
     render: function() {

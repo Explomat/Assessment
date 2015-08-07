@@ -12,11 +12,19 @@ function loadAssessmentData(data) {
 }
 
 function setSubordinates(){
-	//_collaborators = data.subordinates;
+	/*_collaborators = _collaborators.map(function(col){
+		delete col['children'];
+	});*/
+
+	for (var i = _collaborators.length - 1; i >= 0; i--) {
+		delete _collaborators[i]['children'];
+	};
+
+	var a = _collaborators;
 }
 
 function setSubdivision(){
-	//_collaborators = data.subdivision;
+	_collaborators = _collaborators;
 }
 
 var AssessmentStore = extend({}, EventEmitter.prototype, {
@@ -46,10 +54,10 @@ AssessmentStore.dispatchToken = AppDispatcher.register(function(payload) {
 		case ServerConstants.RECEIVE_DATA:
 			loadAssessmentData(action.data);
 			break;
-		case ServerConstants.RECEIVE_SUBORDINATES:
+		case AssessmentConstants.RECEIVE_SUBORDINATES:
 			setSubordinates();
 			break;
-		case ServerConstants.RECEIVE_SUBDIVISION:
+		case AssessmentConstants.RECEIVE_SUBDIVISION:
 			setSubdivision();
 			break;
 		default:
