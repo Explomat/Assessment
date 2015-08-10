@@ -15,9 +15,9 @@ function findElem(id, array){
 	while(stack.length > 0){
 		var elem = stack.pop();
 		if (elem.id == id) return elem;
-		elem.children = elem.children || [];
+		var elems = elem.children || [];
 
-		for (var i = elem.children.length - 1; i >= 0; i--) {
+		for (var i = elems.length - 1; i >= 0; i--) {
 			if (elem.id == id) return elem;
 			stack.push(elem.children[i]);
 		};
