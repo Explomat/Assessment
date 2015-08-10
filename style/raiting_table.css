@@ -68,18 +68,23 @@ div.raiting-table__body ul:nth-child(2n){
 	display: table-cell;
 	vertical-align: middle;
 }
-/* .table-container .raiting-table__body:nth-child(2n){
-	background: #C2FDC8;
-} */
+
 .data2,.data3,.data4,.data5,.data6,.data7{
 	width: 13%;
 	text-align: center;
 }
 .data1{
 	width: 35%;
-	padding: 0 0 0 15px;
+	padding: 0 0 0 10px;
 	cursor: pointer;
 }
 .hide{
 	display: none;
+}
+input.form-control{
+	text-align: center;
+	border-radius: none;
+}
+.category-tree>.raiting-table__body>.raiting-table__row{
+	background: #E0F5E6;
 }
