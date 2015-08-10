@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var AssessmentStore = require('../stores/AssessmentStore');
 var AssessmentActions = require('../actions/AssessmentActions');
 var TableTreeView = require('./modules/TableTreeView');
@@ -157,9 +157,15 @@ var AssessmentView = React.createClass({
 		this.setState({isExpand: !this.state.isExpand});
 	},
 
+	changeTreeValue: function(id, colNumber, val){
+		AssessmentActions.changeValue(id, colNumber, val);
+	},
+
 	render:function () {
 		var isDisplayFirstTableStyle = { display : this.state.isDisplayFirstTable ? "block" : "none" };
 		var isDisplaySecondTableStyle = { display : this.state.isDisplaySecondTable ? "block" : "none" };
+
+		console.log(this.state.collaborators);
 
 		return (
 			<div className="panel panel-default">
@@ -168,10 +174,10 @@ var AssessmentView = React.createClass({
 				</div>
 				<div className="panel-body">
 					<div style={isDisplayFirstTableStyle}>	
-						<TableTreeView data={this.state.subordinates} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт', 'План']}/>
+						<TableTreeView data={this.state.subordinates} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт', 'План']}/>
 					</div>
 					<div style={isDisplaySecondTableStyle}>
-						<TableTreeView data={this.state.collaborators} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт', 'План']}/>
+						<TableTreeView data={this.state.collaborators} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт', 'План']}/>
 					</div>
 				</div>
 			</div>

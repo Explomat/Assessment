@@ -11,6 +11,33 @@ function isEditCol(arrayEdit, index){
 	return isEdit;
 }
 
+var Node = React.createClass({
+
+	render: function(){
+		return(
+			<li className={this.props.classes}>
+				<a>{this.props.value}</a>
+			</li>
+		);
+	}
+});
+
+var EditNode = React.createClass({
+
+	handleBlur: function(val){
+		if (this.props.changeColValue)
+			this.props.changeColValue(this.props.id, this.props.colNumber, val);
+	},
+
+	render: function(){
+		return(
+			<li className={this.props.classes}>
+				<TextView value={this.props.value} isValid={Validation.isNumber} onBlur={this.handleBlur}/>
+			</li>
+		);
+	}
+});
+
 var TreeNode = React.createClass({
 
 	expandNode: function() {
@@ -55,9 +82,9 @@ var TreeNode = React.createClass({
 	    e.stopPropagation();
     },
 
-    changeColValue: function(a){
+    changeColValue: function(id, colNumber, val){
     	if (this.props.changeColValue){
-    		this.props.changeColValue();
+    		this.props.changeColValue(id, colNumber, val);
     	}
     },
 
@@ -71,20 +98,18 @@ var TreeNode = React.createClass({
         });
 
     	var name = this.props.data.cols[0];
+    	var len = this.props.data.cols.length;
     	var elems = [];
 
-    	for (var i = this.props.data.cols.length - 1; i >= 1; i--) {
+    	for (var i = 1; i < len; i++) {
 			if (isEditCol(this.props.data.edit, i)){
-				elems.push(<li key={i} className={classes + " data" + (i + 2)}>
-	                			<TextView value={this.props.data.cols[i]} isValid={Validation.isNumber} onBlur={this.changeColValue}/>
-	           				</li>);
+				elems.push(<EditNode key={i} id={this.props.data.id} colNumber={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]} changeColValue={this.changeColValue}/>);
 			}
 			else {
-				elems.push(<li key={i} className={classes + " data" + (i + 2)}>
-	                			<a>{this.props.data.cols[i]}</a>
-	           				</li>);
+				elems.push(<Node key={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]}/>);
 			}
-		} 
+		}
+
         return (
         	<div className="raiting-table__body">
         		<ul className="raiting-table__row">
@@ -110,6 +135,11 @@ var CategoryTree = React.createClass({
     	}
     },
 
+    changeColValue: function(id, colNumber, val){
+    	if (this.props.changeValue)
+    		this.props.changeValue(id, colNumber, val);
+    },
+
     render: function() {
         return (
         	<div className="table-container">
@@ -122,7 +152,7 @@ var CategoryTree = React.createClass({
 				</div>
 				<div className="raiting-table--scroll category-tree">
 	            	{this.props.data.map(function(tree) {
-			    		return <TreeNode key={tree.id} data={tree} isExpand={this.props.isExpand}/>
+			    		return <TreeNode key={tree.id} data={tree} isExpand={this.props.isExpand} changeColValue={this.changeColValue}/>
 			    	}.bind(this))}
 			    </div>
 	        </div>

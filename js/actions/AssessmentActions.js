@@ -12,15 +12,12 @@ var AssessmentActions = {
 		});
 	},
 
-	setSubordinates: function() {
-		AppDispatcher.handleData({
-			actionType: AssessmentConstants.RECEIVE_SUBORDINATES
-		});
-	},
-
-	setSubdivision: function() {
-		AppDispatcher.handleData({
-			actionType: AssessmentConstants.RECEIVE_SUBDIVISION
+	changeValue: function(id, colNumber, val) {
+		AppDispatcher.handleAction({
+			actionType: AssessmentConstants.CHANGE_COL_VALUE,
+			id: id,
+			colNumber: colNumber,
+			value: val
 		});
 	},
 
