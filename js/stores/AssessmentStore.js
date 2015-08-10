@@ -31,6 +31,10 @@ var AssessmentStore = extend({}, EventEmitter.prototype, {
 		return _collaborators;
 	},
 
+	getSubordinates: function () {
+		return _subordinates;
+	},
+
 	emitChange: function() {
 		this.emit('change');
 	},
