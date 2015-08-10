@@ -15,12 +15,12 @@ window.onload = function () {
 			    {
 			      "id": 4,
 			      "cols": ["Baby & Kids Stuff", 1, 2, 3, "5%", "60%"],
-			      "edit": [3]
+			      "edit": []
 			    },
 			    {
 			      "id": 5,
 			      "cols": ["Music, Films, Books & Games", 1, 2, 3, "5%", "60%"],
-			      "edit": [3]
+			      "edit": []
 			    }
 			  ]
 			},
@@ -32,17 +32,17 @@ window.onload = function () {
 		        {
 		          "id": 7,
 		          "cols": ["Car Parts & Accessories", 1, 2, 3, "5%", "60%"],
-		          "edit": [3]
+		          "edit": []
 		        },
 		        {
 		          "id": 8,
 		          "cols": ["Cars", 1, 2, 3, "5%", "60%"],
-		          "edit": [3]
+		          "edit": []
 		        },
 		        {
 		          "id": 10016,
 		          "cols": ["Motorbike Parts & Accessories", 1, 2, 3, "5%", "60%"],
-		          "edit": [3]
+		          "edit": []
 		        }
 		      ]
 		    },
@@ -54,17 +54,17 @@ window.onload = function () {
 		        {
 		          "id": 10,
 		          "cols": ["Accountancy", 1, 2, 3, "5%", "60%"],
-		          "edit": [3]
+		          "edit": []
 		        },
 		        {
 		          "id": 11,
 		          "cols": ["Financial Services & Insurance", 1, 2, 3, "5%", "60%"],
-		          "edit": [3]
+		          "edit": []
 		        },
 		        {
 		          "id": 12,
 		          "cols": ["Bar Staff & Management", 1, 2, 3, "5%", "60%"],
-		          "edit": [3]
+		          "edit": []
 		        }
 		      ]
 		    }
