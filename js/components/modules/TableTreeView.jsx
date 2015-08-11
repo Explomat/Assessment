@@ -1,6 +1,5 @@
 var React = require('react/addons');
 var TextView = require('./Text').TextView;
-var Validation = require('../../utils/Validation');
 
 function isEditCol(arrayEdit, index){
 	var isEdit = false;
@@ -32,7 +31,7 @@ var EditNode = React.createClass({
 	render: function(){
 		return(
 			<li className={this.props.classes}>
-				<TextView value={this.props.value} isValid={Validation.isNumber} onBlur={this.handleBlur}/>
+				<TextView value={this.props.value} isValid={function(val) { return /^[1-5]$/.test(val)}} onBlur={this.handleBlur}/>
 			</li>
 		);
 	}

@@ -53,6 +53,7 @@ var TopMenu = React.createClass({
 
 		var displayPlus = { display : this.props.isExpand ? "none" : "block" };
 		var displayMinus = { display : this.props.isExpand ? "block" : "none" };
+		var displayButton = { display : this.state.isActiveFirstButton ? "none": "block" };
 		return (
 			<div className="clearfix topmenu">
 				<div className="pull-left">
@@ -63,12 +64,14 @@ var TopMenu = React.createClass({
 						<span>Мое подразделение</span>
 					</button>
 				</div>
-				<button title="Раскрыть всех" type="button" style={displayPlus} className="btn btn-default btn-sm pull-right" onClick={this.handleExpandAll}>
-					<span className="glyphicon glyphicon-plus"></span>
-				</button>
-				<button title="Свернуть всех" type="button" style={displayMinus} className="btn btn-default btn-sm pull-right" onClick={this.handleExpandAll}>
-					<span className="glyphicon glyphicon-minus"></span>
-				</button>
+				<div style={displayButton}>
+					<button title="Раскрыть всех" type="button" style={displayPlus} className="btn btn-default btn-sm pull-right" onClick={this.handleExpandAll}>
+						<span className="glyphicon glyphicon-plus"></span>
+					</button>
+					<button title="Свернуть всех" type="button" style={displayMinus} className="btn btn-default btn-sm pull-right" onClick={this.handleExpandAll}>
+						<span className="glyphicon glyphicon-minus"></span>
+					</button>
+				</div>
 			</div>
 		);
 	}
@@ -167,7 +170,7 @@ var AssessmentView = React.createClass({
 	render:function () {
 		var isDisplayFirstTableStyle = { display : this.state.isDisplayFirstTable ? "block" : "none" };
 		var isDisplaySecondTableStyle = { display : this.state.isDisplaySecondTable ? "block" : "none" };
-		
+
 		return (
 			<div className="panel panel-default">
 				<div className="panel-heading">
