@@ -167,22 +167,19 @@ var AssessmentView = React.createClass({
 	render:function () {
 		var isDisplayFirstTableStyle = { display : this.state.isDisplayFirstTable ? "block" : "none" };
 		var isDisplaySecondTableStyle = { display : this.state.isDisplaySecondTable ? "block" : "none" };
-
-		//console.log(this.state.subordinates);
-		//console.log("subordinates");
-		//console.log(this.state.subordinates);
-		//console.log("collaborators");
+		
 		return (
 			<div className="panel panel-default">
 				<div className="panel-heading">
 					<TopMenu handleExpandAll={this.handleExpandAll} isExpand={this.state.isExpand} handleSetSubdivision={this.handleSetSubdivision} handleSetSubordinates={this.handleSetSubordinates}/>
 				</div>
 				<div className="panel-body">
-
+					<div style={isDisplayFirstTableStyle}>	
 						<TableTreeView data={this.state.subordinates} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт', 'План']}/>
-
-						<TableTreeView data={this.state.subordinates} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт', 'План']}/>
-
+					</div>
+					<div style={isDisplaySecondTableStyle}>
+						<TableTreeView data={this.state.collaborators} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт', 'План']}/>
+					</div>
 				</div>
 			</div>
 		);

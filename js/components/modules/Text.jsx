@@ -6,6 +6,10 @@ var TextBase = {
 		this.validClass = 'not-valid';
 	},
 
+	componentWillReceiveProps: function(nextProps) {
+		this.setState({value: nextProps.value});
+	},
+
 	handleChange: function(e) {
 		if (!this.props.isValid(e.target.value))
 			e.target.classList.add(this.validClass);
