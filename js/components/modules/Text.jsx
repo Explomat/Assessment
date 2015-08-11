@@ -26,7 +26,7 @@ var TextBase = {
 			val = this.props.value;
 		}
 
-		if (this.props.onBlur)
+		if (this.props.onBlur && val != this.props.value)
 			this.props.onBlur(val);
 	},
 
