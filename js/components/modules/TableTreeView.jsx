@@ -33,6 +33,18 @@ function isEditCol(arrayEdit, index){
 	return isEdit;
 }
 
+var GroupNode = React.createClass({
+
+	render: function(){
+		var cl = this.props.isFirst ? 'sadomia' : '';
+		return(
+			<li className={this.props.classes}>
+				<a style={{'height':this.props.height}} className={cl}><span className='inner-sadomia'>{this.props.value}</span></a>
+			</li>
+		);
+	}
+});
+
 var Node = React.createClass({
 
 	render: function(){
@@ -125,21 +137,25 @@ var TreeNode = React.createClass({
     	var height = this.props.height || 0;
     	var elems = [];
 
-    	for (var i = 1; i < len; i++) {
+    	for (var i = 1; i < len - 2; i++) {
 			if (isEditCol(this.props.data.edit, i)){
 				elems.push(<EditNode key={i} id={this.props.data.id} colNumber={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]} changeColValue={this.changeColValue}/>);
 			}
 			else {
-				elems.push(<Node key={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]} isFirst={isFirst} height={height}/>);
+				elems.push(<Node key={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]}/>);
 			}
+		}
+
+		for (var i = len-2; i < len; i++) {
+			elems.push(<GroupNode key={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]} isFirst={isFirst} height={height}/>)
 		}
 
 		var children = groupChildren(this.state.children);
 		var childs = [];
 		children.forEach(function(ch, index){
 			ch.forEach(function(c, i){
-				var isFirst = index === 0 ? true : false;
-				var height = isFirst ? ch.length : 0;
+				var isFirst = i === 0 ? true : false;
+				var height = isFirst ? ch.length * 35 : 0;
 				childs.push(<TreeNode key={c.id + index + i} data={c} isExpand={this.props.isExpand} isFirst={isFirst} height={height}/>)
 			}.bind(this));
 		}.bind(this));
