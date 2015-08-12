@@ -103,13 +103,15 @@ input.form-control{
 	position: absolute;
 	z-index: 1;
 	top: 0;
-
 	display: table;
-
 	width: 100%;
-
 	background: #FFB192;
 }
+
+.raiting-table__row a.over,  .raiting-table__row li.over{
+	background-color: red;
+}
+
 .inner-sadomia, .category-tree>.raiting-table__body>.raiting-table__row>li>a>.sadomia2{
 	display: table-cell;
 

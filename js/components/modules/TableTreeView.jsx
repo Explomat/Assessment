@@ -7,8 +7,8 @@ var GroupNode = React.createClass({
 	render: function(){
 		var cl = this.props.isFirst ? 'sadomia' : '';
 		return(
-			<li className={this.props.classes}>
-				<a style={{'height':this.props.height}} className={cl}><span className='inner-sadomia'>{this.props.value}</span></a>
+			<li className={this.props.classes + " " + this.props.classesForA}>
+				<a style={{'height':this.props.height}} className={cl + " " + this.props.classesForA}><span className='inner-sadomia'>{this.props.value}</span></a>
 			</li>
 		);
 	}
@@ -118,9 +118,11 @@ var TreeNode = React.createClass({
 			}
 		}
 
-		for (var i = len-2; i < len; i++) {
-			elems.push(<GroupNode key={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]} isFirst={isFirst} height={height}/>)
-		}
+		var firstVal = parseInt(this.props.data.cols[len-2]);
+		var secondVal = parseInt(this.props.data.cols[len-1]);
+		var firstClass = firstVal > secondVal ? 'over' : '';
+		elems.push(<GroupNode key={len-2} classes={classes + " data" + len} classesForA = {firstClass} value={firstVal+"%"} isFirst={isFirst} height={height}/>);
+		elems.push(<GroupNode key={len-1} classes={classes + " data" + (len + 1)} value={secondVal+"%"} isFirst={isFirst} height={height}/>)
 
 		var children = TableUtils.group(this.state.children);
 		var childs = [];
@@ -128,7 +130,7 @@ var TreeNode = React.createClass({
 			ch.forEach(function(c, i){
 				var isFirst = i === 0 ? true : false;
 				var height = isFirst ? ch.length * 35 : 0;
-				childs.push(<TreeNode key={c.id + index + i} data={c} isExpand={this.props.isExpand} isFirst={isFirst} height={height} changeColValue={this.changeColValue} expandedNodeId={this.props.expandedNodeId} parentId={this.props.data.id}/>)
+				childs.push(<TreeNode key={c.id + index + i + Math.random(0,1)} data={c} isExpand={this.props.isExpand} isFirst={isFirst} height={height} changeColValue={this.changeColValue} expandedNodeId={this.props.expandedNodeId} parentId={this.props.data.id}/>)
 			}.bind(this));
 		}.bind(this));
 
@@ -156,7 +158,6 @@ var CategoryTree = React.createClass({
     },
 
     changeColValue: function(id, colNumber, val, parentId){
-    	console.log(parentId);
     	if (this.props.changeValue)
     		this.props.changeValue(id, colNumber, val, parentId);
     },
