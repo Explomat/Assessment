@@ -41,7 +41,7 @@ var GroupNode = React.createClass({
 		var cl = this.props.isFirst ? 'sadomia' : '';
 		return(
 			<li className={this.props.classes}>
-				<a style={{'height':this.props.height}} className={cl}><span className='inner-sadomia'>{this.props.value}</span></a>
+				<a style={{'height':this.props.height}} className={cl}><span className="sadomia2">{this.props.value}</span></a>
 			</li>
 		);
 	}
@@ -68,7 +68,7 @@ var EditNode = React.createClass({
 	render: function(){
 		return(
 			<li className={this.props.classes}>
-				<TextView value={this.props.value} isValid={function(val) { return  val == "" || /^[1-5]$/.test(val)}} onBlur={this.handleBlur}/>
+				<TextView value={this.props.value} isValid={function(val) { return val == "" || /^[1-5]$/.test(val)}} onBlur={this.handleBlur}/>
 			</li>
 		);
 	}
@@ -128,7 +128,6 @@ var TreeNode = React.createClass({
     	if (!this.state.children) this.state.children = [];
 
     	var classes = React.addons.classSet({
-            'has-children': (this.props.data.children ? true : false),
             'open': (this.state.children.length ? true : false),
             'closed': (this.state.children ? false : true)
         });
@@ -152,25 +151,12 @@ var TreeNode = React.createClass({
 			elems.push(<GroupNode key={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]} isFirst={isFirst} height={height}/>)
 		}
 
-		var children = groupChildren(this.state.children);
-		var childs = [];
-		children.forEach(function(ch, index){
-			ch.forEach(function(c, i){
-				var isFirst = i === 0 ? true : false;
-				var height = isFirst ? ch.length * 35 : 0;
-				childs.push(<TreeNode key={c.id + index + i} data={c} isExpand={this.props.isExpand} isFirst={isFirst} height={height}/>)
-			}.bind(this));
-		}.bind(this));
-
         return (
         	<div className="raiting-table__body">
         		<ul className="raiting-table__row">
         			<li key={0} className={classes + " data1"} onClick={this.onChildDisplayToggle}><a>{name}</a></li>
 		            {elems}
 	            </ul>
-                <div>
-                	{childs}
-                </div>
             </div>
         );
     }
@@ -191,6 +177,15 @@ var CategoryTree = React.createClass({
     },
 
     render: function() {
+    	var elements = groupChildren(this.props.data);
+		var elems = [];
+		elements.forEach(function(ch, index){
+			ch.forEach(function(c, i){
+				var isFirst = i === 0 ? true : false;
+				var height = isFirst ? ch.length * 35 : 0;
+				elems.push(<TreeNode key={c.id + index + i} data={c} isExpand={this.props.isExpand} changeColValue={this.changeColValue} isFirst={isFirst} height={height}/>)
+			}.bind(this));
+		}.bind(this));
         return (
         	<div className="table-container">
         		<div className="header">
@@ -201,9 +196,7 @@ var CategoryTree = React.createClass({
 					</ul>
 				</div>
 				<div className="raiting-table--scroll category-tree">
-	            	{this.props.data.map(function(tree) {
-			    		return <TreeNode key={tree.id} data={tree} isExpand={this.props.isExpand} changeColValue={this.changeColValue}/>
-			    	}.bind(this))}
+	            	{elems}
 			    </div>
 	        </div>
         );

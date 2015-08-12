@@ -9,7 +9,7 @@ window.onload = function () {
 	AssessmentActions.receiveData([
 			{
 			  "id": 2,
-			  "cols": ["Петров Михаил Валерьевич", 1, 2, 2, "28%", "5%"],
+			  "cols": ["Петров Михаил Валерьевич", 1, 2, "", "28%", "5%"],
 			  "edit": [3],
 			  "children": [
 			    {

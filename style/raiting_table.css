@@ -101,7 +101,7 @@ input.form-control{
 	background: #FFB192;
 	z-index: 1;	
 }
-.inner-sadomia
+.inner-sadomia, .category-tree>.raiting-table__body>.raiting-table__row>li>a>.sadomia2
 {
 	display: table-cell;
 	vertical-align: middle;
