@@ -119,6 +119,7 @@ var TreeNode = React.createClass({
     },
 
     changeColValue: function(id, colNumber, val){
+    	console.log(id, colNumber, val);
     	if (this.props.changeColValue){
     		this.props.changeColValue(id, colNumber, val);
     	}
@@ -140,7 +141,7 @@ var TreeNode = React.createClass({
     	var elems = [];
 
     	for (var i = 1; i < len - 2; i++) {
-			if (isEditCol(this.props.data.edit, i)){
+			if (isEditCol(this.props.data.edit, i) && !this.props.data.children){
 				elems.push(<EditNode key={i} id={this.props.data.id} colNumber={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]} changeColValue={this.changeColValue}/>);
 			}
 			else {
