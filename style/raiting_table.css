@@ -108,3 +108,11 @@ input.form-control{
 	text-align: center;
 	border: 1px solid #fff;
 } 
+input:disabled{
+	border: none;
+	background: #E0F5E6;
+	cursor: default;
+}
+input:disabled:hover{
+	background:#E1E1E1;
+}
