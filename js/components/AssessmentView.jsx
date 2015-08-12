@@ -148,6 +148,7 @@ var AssessmentView = React.createClass({
 		data.isExpand = false;
 		data.isDisplayFirstTable = true;
 		data.isDisplaySecondTable = false;
+		data.expandedNodeId = null;
 		return data;
 	},
 
@@ -163,8 +164,9 @@ var AssessmentView = React.createClass({
 		this.setState({isExpand: !this.state.isExpand});
 	},
 
-	changeTreeValue: function(id, colNumber, val){
+	changeTreeValue: function(id, colNumber, val, parentId){
 		AssessmentActions.changeValue(id, colNumber, val);
+		this.setState({expandedNodeId: parentId});
 	},
 
 	render:function () {
@@ -180,7 +182,7 @@ var AssessmentView = React.createClass({
 						<TableTreeViewSecond data={this.state.subordinates} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт', 'План']}/>
 					</div>
 					<div style={isDisplaySecondTableStyle}>
-						<TableTreeView data={this.state.collaborators} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт', 'План']}/>
+						<TableTreeView data={this.state.collaborators} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт', 'План']} expandedNodeId={this.state.expandedNodeId}/>
 					</div>
 				</div>
 			</div>

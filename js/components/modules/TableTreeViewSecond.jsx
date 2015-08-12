@@ -1,39 +1,6 @@
 var React = require('react/addons');
 var TextView = require('./Text').TextView;
-
-function groupChildren(array){
-	var firstGroup = [1,2];
-	var secondGroup = [3,4];
-	var thirdGroup = [5];
-	var groups = [];
-	array.forEach(function (item) {
-		var val = parseInt(item.cols[3]);
-		val = val || parseInt(item.cols[2]);
-		if (!val) return null;
-		if (firstGroup.indexOf(val) !== -1){
-			groups[0] = groups[0] || [];
-			groups[0].push(item);
-		}
-		else if (secondGroup.indexOf(val) !== -1){
-			groups[1] = groups[1] || [];
-			groups[1].push(item);
-		}
-		else if(thirdGroup.indexOf(val) !== -1){
-			groups[2] = groups[2] || [];
-			groups[2].push(item);
-		}
-	});
-	return groups;
-}
-
-function isEditCol(arrayEdit, index){
-	var isEdit = false;
-	arrayEdit.forEach(function(item){
-		if (item == index)
-			isEdit = true;
-	});
-	return isEdit;
-}
+var TableUtils = require('../../utils/TableUtils');
 
 var GroupNode = React.createClass({
 
@@ -139,7 +106,7 @@ var TreeNode = React.createClass({
     	var elems = [];
 
     	for (var i = 1; i < len - 2; i++) {
-			if (isEditCol(this.props.data.edit, i)){
+			if (TableUtils.isEditCol(this.props.data.edit, i)){
 				elems.push(<EditNode key={i} id={this.props.data.id} colNumber={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]} changeColValue={this.changeColValue}/>);
 			}
 			else {
@@ -177,7 +144,7 @@ var CategoryTree = React.createClass({
     },
 
     render: function() {
-    	var elements = groupChildren(this.props.data);
+    	var elements = TableUtils.group(this.props.data);
 		var elems = [];
 		elements.forEach(function(ch, index){
 			ch.forEach(function(c, i){
