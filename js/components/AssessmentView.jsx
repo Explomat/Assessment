@@ -140,7 +140,6 @@ var AssessmentView = React.createClass({
 
 	_onChange: function() {
 		var data = getData();
-		console.log(data);
 		this.setState(data);
 	},
 
@@ -165,7 +164,6 @@ var AssessmentView = React.createClass({
 	},
 
 	changeTreeValue: function(id, colNumber, val){
-		console.log(id, colNumber, val);
 		AssessmentActions.changeValue(id, colNumber, val);
 	},
 
