@@ -1,7 +1,8 @@
 .table-container{
 	position: relative;
-	margin: 0 auto;
+
 	width: 100%;
+	margin: 0 auto;
 }
 .table-container .header{
 	font-weight: bold;
@@ -18,7 +19,7 @@
 	box-shadow: inset 0 -50px 70px -50px #2D7F2F;
 }
 div.panel-body{
-	padding:0;
+	padding: 0;
 }
 .table-container .raiting-table__header{
 	display: table-row;
@@ -44,19 +45,20 @@ div.panel-body{
 	height: 500px;
 }
 .table-container .raiting-table__body{
-	width: 100%;
 	display: table;
+
+	width: 100%;
 }
 td:not(:nth-of-type(2)){
 	text-align: center;
 }
-.table-container .raiting-table__body ul,
-.table-container .raiting-table__body div{
-	height: 2.5em;
+.table-container .raiting-table__body ul, .table-container .raiting-table__body div{
 	display: table;
+
 	width: 100%;
-	margin:0;
-	padding:0;
+	height: 2.5em;
+	margin: 0;
+	padding: 0;
 }
 div.raiting-table__body ul:nth-child(2n){
 	background: #B6FCD0;
@@ -66,16 +68,19 @@ div.raiting-table__body ul:nth-child(2n){
 }
 .table-container div.raiting-table__body li{
 	display: table-cell;
+
 	vertical-align: middle;
 }
 
-.data2,.data3,.data4,.data5,.data6,.data7{
+.data2, .data3, .data4, .data5, .data6, .data7{
 	width: 13%;
+
 	text-align: center;
 }
 .data1{
 	width: 35%;
 	padding: 0 0 0 10px;
+
 	cursor: pointer;
 }
 .hide{
@@ -83,6 +88,7 @@ div.raiting-table__body ul:nth-child(2n){
 }
 input.form-control{
 	text-align: center;
+
 	border-radius: none;
 }
 .category-tree>.raiting-table__body>.raiting-table__row{
@@ -90,29 +96,25 @@ input.form-control{
 }
 .category-tree>.raiting-table__body>.raiting-table__row>li>a>span{
 	display: block;
+
 	border: none;
 }
-.raiting-table__row .sadomia
-{
-	display: table;
+.raiting-table__row .sadomia{
 	position: absolute;
+	z-index: 1;
 	top: 0;
+
+	display: table;
+
 	width: 100%;
+
 	background: #FFB192;
-	z-index: 1;	
 }
-.inner-sadomia, .category-tree>.raiting-table__body>.raiting-table__row>li>a>.sadomia2
-{
+.inner-sadomia, .category-tree>.raiting-table__body>.raiting-table__row>li>a>.sadomia2{
 	display: table-cell;
-	vertical-align: middle;
+
 	text-align: center;
-	border: 1px solid #fff;
-} 
-input:disabled{
-	border: none;
-	background: #E0F5E6;
-	cursor: default;
-}
-input:disabled:hover{
-	background:#E1E1E1;
+	vertical-align: middle;
+
+	border: 1px solid #FFF;
 }
