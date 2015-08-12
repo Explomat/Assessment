@@ -119,7 +119,6 @@ var TreeNode = React.createClass({
     },
 
     changeColValue: function(id, colNumber, val){
-    	console.log(id, colNumber, val);
     	if (this.props.changeColValue){
     		this.props.changeColValue(id, colNumber, val);
     	}
@@ -159,7 +158,7 @@ var TreeNode = React.createClass({
 			ch.forEach(function(c, i){
 				var isFirst = i === 0 ? true : false;
 				var height = isFirst ? ch.length * 35 : 0;
-				childs.push(<TreeNode key={c.id + index + i} data={c} isExpand={this.props.isExpand} isFirst={isFirst} height={height}/>)
+				childs.push(<TreeNode key={c.id + index + i} data={c} isExpand={this.props.isExpand} isFirst={isFirst} height={height} changeColValue={this.changeColValue}/>)
 			}.bind(this));
 		}.bind(this));
 
@@ -187,6 +186,7 @@ var CategoryTree = React.createClass({
     },
 
     changeColValue: function(id, colNumber, val){
+    	console.log(id, colNumber, val);
     	if (this.props.changeValue)
     		this.props.changeValue(id, colNumber, val);
     },
