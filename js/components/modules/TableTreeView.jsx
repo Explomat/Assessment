@@ -1,6 +1,29 @@
 var React = require('react/addons');
 var TextView = require('./Text').TextView;
 
+function groupChildren(array){
+	var firstGroup = [1,2];
+	var secondGroup = [3,4];
+	var thirdGroup = [5];
+	var groups = [];
+	array.forEach(function (item) {
+		var val = item.cols[3];
+		if (firstGroup.indexOf(val) !== -1){
+			groups[0] = groups[0] || [];
+			groups[0].push(item);
+		}
+		else if (secondGroup.indexOf(val) !== -1){
+			groups[1] = groups[1] || [];
+			groups[1].push(item);
+		}
+		else if(thirdGroup.indexOf(val) !== -1){
+			groups[2] = groups[2] || [];
+			groups[2].push(item);
+		}
+	});
+	return groups;
+}
+
 function isEditCol(arrayEdit, index){
 	var isEdit = false;
 	arrayEdit.forEach(function(item){
@@ -98,6 +121,8 @@ var TreeNode = React.createClass({
 
     	var name = this.props.data.cols[0];
     	var len = this.props.data.cols.length;
+    	var isFirst = this.props.isFirst || false;
+    	var height = this.props.height || 0;
     	var elems = [];
 
     	for (var i = 1; i < len; i++) {
@@ -105,9 +130,19 @@ var TreeNode = React.createClass({
 				elems.push(<EditNode key={i} id={this.props.data.id} colNumber={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]} changeColValue={this.changeColValue}/>);
 			}
 			else {
-				elems.push(<Node key={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]}/>);
+				elems.push(<Node key={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]} isFirst={isFirst} height={height}/>);
 			}
 		}
+
+		var children = groupChildren(this.state.children);
+		var childs = [];
+		children.forEach(function(ch, index){
+			ch.forEach(function(c, i){
+				var isFirst = index === 0 ? true : false;
+				var height = isFirst ? ch.length : 0;
+				childs.push(<TreeNode key={c.id + index + i} data={c} isExpand={this.props.isExpand} isFirst={isFirst} height={height}/>)
+			}.bind(this));
+		}.bind(this));
 
         return (
         	<div className="raiting-table__body">
@@ -116,9 +151,7 @@ var TreeNode = React.createClass({
 		            {elems}
 	            </ul>
                 <div>
-                	{this.state.children.map(function(child, index) {
-				    	return <TreeNode key={child.id + index} data={child} isExpand={this.props.isExpand}/>;
-				    }.bind(this))}
+                	{childs}
                 </div>
             </div>
         );
