@@ -109,7 +109,7 @@ var TreeNode = React.createClass({
     	var height = this.props.height || 0;
     	var elems = [];
 
-    	for (var i = 1; i < len - 2; i++) {
+    	for (var i = 1; i < len - 4; i++) {
 			if (TableUtils.isEditCol(this.props.data.edit, i) && !this.props.data.children){
 				elems.push(<EditNode key={i} id={this.props.data.id} colNumber={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]} changeColValue={this.changeColValue}/>);
 			}
@@ -117,6 +117,19 @@ var TreeNode = React.createClass({
 				elems.push(<Node key={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]}/>);
 			}
 		}
+
+		var firstRaitingVal = parseInt(this.props.data.cols[len-4]) || 0;
+		var secondRaitingVal = parseInt(this.props.data.cols[len-3]) || 0;
+		var raitingClass = firstRaitingVal !== secondRaitingVal ? 'not-equal' : '';
+
+		elems.push(<Node key={len-4} classes={classes + " data" + (len-2) + " " + raitingClass} value={this.props.data.cols[len-4]}/>);
+		if (TableUtils.isEditCol(this.props.data.edit, len-3) && !this.props.data.children){
+			elems.push(<EditNode key={len-3} id={this.props.data.id} colNumber={len-3} classes={classes + " data" + (len-1)} value={this.props.data.cols[len-3]} changeColValue={this.changeColValue}/>);
+		}
+		else {
+			elems.push(<Node key={len-3} classes={classes + " data" + (len-3)} value={this.props.data.cols[len-3]}/>);
+		}
+
 
 		var firstVal = parseInt(this.props.data.cols[len-2]);
 		var secondVal = parseInt(this.props.data.cols[len-1]);

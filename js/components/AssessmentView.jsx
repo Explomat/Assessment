@@ -78,6 +78,34 @@ var TopMenu = React.createClass({
 	}
 });
 
+var DownMenuTest= React.createClass({
+
+	handleSaveChanges: function() {
+		var data = AssessmentStore.getData();
+		AssessmentActions.saveChanges(data);
+	},
+
+	handleApprove: function(){
+		AssessmentActions.approve();
+	},
+
+	render: function() {
+		return (
+			<div style={{'margin-top':'20px'}} className="pull-right">
+				<button style={{'margin-left':'25px'}} type="button" className="btn btn-default btn-sm" onClick={function(){alert("Изменения сохранены!")}}>
+					<span>Сохранить изменения</span>
+				</button>
+				<button style={{'margin-left':'25px'}} type="button" className="btn btn-default btn-sm" onClick={function(){alert("Отправлено на подтверждение!")}}>
+					<span>Отправить на подтверждение</span>
+				</button>
+				<button style={{'margin-left':'25px'}} type="button" className="btn btn-default btn-sm" onClick={function(){alert("Подтверждено!")}}>
+					<span>Подтвердить</span>
+				</button>
+			</div>
+		);
+	}
+});
+
 var DownMenuFirst = React.createClass({
 
 	handleSaveChanges: function() {
@@ -185,6 +213,7 @@ var AssessmentView = React.createClass({
 						<TableTreeView data={this.state.collaborators} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт', 'План']} expandedNodeId={this.state.expandedNodeId}/>
 					</div>
 				</div>
+				<DownMenuTest />
 			</div>
 		);
 	}
