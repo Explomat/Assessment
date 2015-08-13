@@ -107,6 +107,10 @@ input.form-control{
 	width: 100%;
 	background: #FFB192;
 }
+.raiting-table__row li.not-equal{
+	background-color: #F0AD4E;
+	border-color: #EEA236;
+}
 
 .raiting-table__row a.over,  .raiting-table__row li.over{
 	background-color: red;
