@@ -3,26 +3,26 @@ var ServerConstants = require('../constants/ServerConstants');
 var EventEmitter = require('events').EventEmitter;
 var AssessmentConstants = require('../constants/AssessmentConstants');
 var extend = require('extend-object');
+var TableUtils = require('../utils/TableUtils');
 
 var _data = {}, _collaborators = [], _subordinates = [];
 
 function findElem(id, array){
 	var stack = [];
-	array.forEach(function(item){
+	for (var i = array.length - 1; i >= 0; i--) {
+		var item = array[i];
 		stack.push(item);
-	})
+		while(stack.length > 0){
+			var elem = stack.pop();
+			if (elem.id == id) return { elem: elem, parent: item.id == elem.id ? null : item };
+			var elems = elem.children || [];
 
-	while(stack.length > 0){
-		var elem = stack.pop();
-		if (elem.id == id) return elem;
-		var elems = elem.children || [];
-
-		for (var i = elems.length - 1; i >= 0; i--) {
-			if (elem.id == id) return elem;
-			stack.push(elem.children[i]);
-		};
-	}
-	return null;
+			for (var j = elems.length - 1; j >= 0; j--) {
+				stack.push(elem.children[j]);
+			};
+		}
+	};
+	return {};
 }
 
 function loadAssessmentData(data) {
@@ -36,25 +36,51 @@ function loadAssessmentData(data) {
 	//_collaborators = data.collaborators;
 }
 
+function calculatePercents(groups) {
+	var firstGroup = groups[0] || [];
+	var secondGroup = groups[1] || [];
+	var thirdGroup = groups[2] || [];
+	var len = firstGroup.length + secondGroup.length + thirdGroup.length;
+	var onePercent = 100 / len;
+
+	firstGroup.forEach(function(item){
+		item.cols[5] = 35;
+		item.cols[4] = onePercent * firstGroup.length;
+	});
+	secondGroup.forEach(function(item){
+		item.cols[5] = 60;
+		item.cols[4] = onePercent * secondGroup.length;
+	});
+	thirdGroup.forEach(function(item){
+		item.cols[5] = 5;
+		item.cols[4] = onePercent * thirdGroup.length;
+	});
+}
+
 function changeValue(id, colNumber, val){
 	var elemCollab = findElem(id, _collaborators);
 	var elemSubord = findElem(id, _subordinates);
 
-	if (elemCollab) {
-		for (var i = 0; i < elemCollab.cols.length; i++){
+	if (elemCollab.elem) {
+		for (var i = 0; i < elemCollab.elem.cols.length; i++){
 			if (i == colNumber){
-				elemCollab.cols[i] = val;
+				elemCollab.elem.cols[i] = val;
 				break;
 			}
 		}
+		var parent = elemCollab.parent || {};
+		var groups = TableUtils.group(parent.children || []);
+		calculatePercents(groups);
 	}
-	if (elemSubord) {
-		for (var i = 0; i < elemSubord.cols.length; i++){
+	if (elemSubord.elem) {
+		for (var i = 0; i < elemSubord.elem.cols.length; i++){
 			if (i == colNumber){
-				elemSubord.cols[i] = val;
+				elemSubord.elem.cols[i] = val;
 				break;
 			}
 		}
+		var groups = TableUtils.group(_subordinates);
+		calculatePercents(groups);
 	}
 }
 
