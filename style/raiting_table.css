@@ -96,9 +96,18 @@ input.form-control{
 }
 .category-tree>.raiting-table__body>.raiting-table__row>li>a>span{
 	display: block;
-
 	border: none;
 }
+.category-tree>.raiting-table__body>.raiting-table__row>li>a {
+	cursor: default;
+	text-decoration: none;
+}
+
+.category-tree>.raiting-table__body>.raiting-table__row>li:first-child a {
+	cursor: pointer;
+	text-decoration: none;
+}
+
 .raiting-table__row .sadomia{
 	position: absolute;
 	z-index: 1;
