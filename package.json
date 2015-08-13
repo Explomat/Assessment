@@ -9,6 +9,7 @@
     "deploytd": "uglifyjs build/js/bundle.js -o build/js/bundle.min.js",
     "build": "browserify js/main.js -d | uglifyjs -mc > build/js/bundle.js",
     "build-jsx": "jsx js/components --extension jsx js/components",
+    "build-css": "cat one.css two.css three.css | cleancss -o merged-and-minified.css",
     "start": "node node_modules/webserver/webserver.js"
   },
   "dependencies": {

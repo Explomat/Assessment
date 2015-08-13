@@ -189,7 +189,7 @@ var AssessmentView = React.createClass({
 	},
 
 	handleExpandAll: function(){
-		this.setState({isExpand: !this.state.isExpand});
+		this.setState({isExpand: !this.state.isExpand, expandedNodeId: null});
 	},
 
 	changeTreeValue: function(id, colNumber, val, parentId){
