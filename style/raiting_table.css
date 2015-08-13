@@ -105,22 +105,21 @@ input.form-control{
 	top: 0;
 	display: table;
 	width: 100%;
-	background: #FFB192;
+	background: #42c142;
 }
-.raiting-table__row li.not-equal{
+.raiting-table__row li>input.not-equal, .raiting-table__row li.not-equal{
 	background-color: #F0AD4E;
 	border-color: #EEA236;
+	border-radius: 5px;
 }
 
 .raiting-table__row a.over,  .raiting-table__row li.over{
-	background-color: red;
+	background-color: #E54242;
 }
 
 .inner-sadomia, .category-tree>.raiting-table__body>.raiting-table__row>li>a>.sadomia2{
 	display: table-cell;
-
 	text-align: center;
 	vertical-align: middle;
-
 	border: 1px solid #FFF;
 }

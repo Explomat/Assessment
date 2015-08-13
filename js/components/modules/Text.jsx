@@ -53,7 +53,7 @@ var TextView = React.createClass({
 	
 	render:function() {
 		return (
-			<input className="form-control" type="text" value={this.state.value} onChange={this.handleChange} onBlur={this.handleBlur} placeholder={this.props.placeholder}/>
+			<input className={"form-control " + this.props.isValidClass} type="text" value={this.state.value} onChange={this.handleChange} onBlur={this.handleBlur} placeholder={this.props.placeholder}/>
 		);
 	}
 });

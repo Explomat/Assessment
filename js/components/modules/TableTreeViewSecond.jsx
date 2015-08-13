@@ -35,7 +35,7 @@ var EditNode = React.createClass({
 	render: function(){
 		return(
 			<li className={this.props.classes}>
-				<TextView value={this.props.value} isValid={function(val) { return val == "" || /^[1-5]$/.test(val)}} onBlur={this.handleBlur}/>
+				<TextView isValidClass={this.props.isValidClass || ''} value={this.props.value} isValid={function(val) { return val == "" || /^[1-5]$/.test(val)}} onBlur={this.handleBlur}/>
 			</li>
 		);
 	}
@@ -118,8 +118,8 @@ var TreeNode = React.createClass({
 		var secondRaitingVal = parseInt(this.props.data.cols[len-3]) || 0;
 		var raitingClass = firstRaitingVal !== secondRaitingVal ? 'not-equal' : '';
 
-		elems.push(<Node key={len-4} classes={classes + " data" + (len-2) + " " + raitingClass} value={this.props.data.cols[len-4]}/>);
-		elems.push(<EditNode key={len-3} id={this.props.data.id} colNumber={len-3} classes={classes + " data" + (len-1)} value={this.props.data.cols[len-3]} changeColValue={this.changeColValue}/>);
+		elems.push(<Node key={len-4} classes={classes + " data" + (len-2)} value={this.props.data.cols[len-4]}/>);
+		elems.push(<EditNode key={len-3} id={this.props.data.id} colNumber={len-3} classes={classes + " data" + (len-1)} isValidClass={raitingClass} value={this.props.data.cols[len-3]} changeColValue={this.changeColValue}/>);
 
 		var firstVal = parseInt(this.props.data.cols[len-2]);
 		var secondVal = parseInt(this.props.data.cols[len-1]);

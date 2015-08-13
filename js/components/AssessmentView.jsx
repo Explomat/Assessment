@@ -91,14 +91,14 @@ var DownMenuTest= React.createClass({
 
 	render: function() {
 		return (
-			<div style={{'margin-top':'20px'}} className="pull-right">
-				<button style={{'margin-left':'25px'}} type="button" className="btn btn-default btn-sm" onClick={function(){alert("Изменения сохранены!")}}>
+			<div style={{'marginTop':'20px'}} className="pull-right">
+				<button style={{'marginLeft':'25px'}} type="button" className="btn btn-default btn-sm" onClick={function(){alert("Изменения сохранены!")}}>
 					<span>Сохранить изменения</span>
 				</button>
-				<button style={{'margin-left':'25px'}} type="button" className="btn btn-default btn-sm" onClick={function(){alert("Отправлено на подтверждение!")}}>
+				<button style={{'marginLeft':'25px'}} type="button" className="btn btn-default btn-sm" onClick={function(){alert("Отправлено на подтверждение!")}}>
 					<span>Отправить на подтверждение</span>
 				</button>
-				<button style={{'margin-left':'25px'}} type="button" className="btn btn-default btn-sm" onClick={function(){alert("Подтверждено!")}}>
+				<button style={{'marginLeft':'25px'}} type="button" className="btn btn-default btn-sm" onClick={function(){alert("Подтверждено!")}}>
 					<span>Подтвердить</span>
 				</button>
 			</div>
