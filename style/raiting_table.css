@@ -11,10 +11,11 @@
 	width: 100%;
 	height: 50px;
 	padding-right: 17px;
-	background: rgba(204, 0, 53, 0.84);
-    box-shadow: inset 0 -35px 70px -50px #2D7F2F;
-    border-radius: 5px;
-	color: #4B4B4B;
+
+	background: #E45555;
+    box-shadow: inset 0 -40px 100px -50px #790000;
+	color: #FFFFFF;
+	text-shadow:1px 1px 1px #1E1E1E;
 }
 div.panel-body{
 	padding: 0;
@@ -90,7 +91,7 @@ input.form-control{
 	border-radius: none;
 }
 .category-tree>.raiting-table__body>.raiting-table__row{
-	background: #E0F5E6;
+	background: #F0ECEC;
 }
 .category-tree>.raiting-table__body>.raiting-table__row>li>a>span{
 	display: block;
@@ -112,16 +113,16 @@ input.form-control{
 	top: 0;
 	display: table;
 	width: 100%;
-	background: #42c142;
+	background: #53D553;
 }
 .raiting-table__row li>input.not-equal, .raiting-table__row li.not-equal{
-	background-color: #F0AD4E;
-	border-color: #EEA236;
+	background-color: #FFDA57;
+	border-color: #FFDA57;
 	border-radius: 5px;
 }
 
-.raiting-table__row a.over,  .raiting-table__row li.over{
-	background-color: #E54242;
+.raiting-table__row a.over, .raiting-table__row li.over{
+	background-color: #F65B5B;
 }
 
 .inner-sadomia, .category-tree>.raiting-table__body>.raiting-table__row>li>a>.sadomia2{

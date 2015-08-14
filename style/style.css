@@ -32,7 +32,7 @@ textarea {
     margin-top: 20px;
 }
 
-.topmenu>div:first-child>button {
+.topmenu>div:first-child>button, .panel-footer button:first-of-type {
     margin-right: 25px;
 }
 
