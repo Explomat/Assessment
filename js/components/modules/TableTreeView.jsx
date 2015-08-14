@@ -132,7 +132,6 @@ var TreeNode = React.createClass({
 		if (!this.props.data.children){
 			var firstVal = parseInt(this.props.data.cols[len - 2]);
 			var secondVal = parseInt(this.props.data.cols[len - 1]);
-			var group = this.props.group || -1;
 			var firstClass = firstVal > secondVal ? 'over' : '';
 			elems.push(<GroupNode key={len-2} classes={classes + " data" + len} classesForA = {firstClass} value={firstVal+"%"} isFirst={isFirst} height={height}/>);
 			elems.push(<GroupNode key={len-1} classes={classes + " data" + (len + 1)} value={secondVal+"%"} isFirst={isFirst} height={height}/>);

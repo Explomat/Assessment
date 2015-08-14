@@ -32,6 +32,11 @@ textarea {
     margin-top: 20px;
 }
 
+.panel-default{
+    min-width:800px;
+}
+
+
 .topmenu>div:first-child>button, .panel-footer button:first-of-type {
     margin-right: 25px;
 }
@@ -92,3 +97,9 @@ textarea {
     display:table;
     clear:both;
 };
+
+.topmenu>p{
+    margin: 5px auto;
+    float: left;
+}
+
