@@ -5,8 +5,7 @@
   "scripts": {
     "td": "npm run build-jsx && browserify js/main.js -d -o build/js/bundle.js && rm -rf js/components/**/*.js & rm -rf js/components/*.js",
     "temptd": "npm run build-jsx && browserify js/main.js -d -o build/js/bundle.js",
-    "deploy": "uglifyjs build/js/bundle.js --source-map build/js/bundle.js.map",
-    "deploytd": "uglifyjs build/js/bundle.js -o build/js/bundle.min.js",
+    "deploy": "uglifyjs build/js/bundle.js -o build/js/bundle.min.js && build-css",
     "build": "browserify js/main.js -d | uglifyjs -mc > build/js/bundle.js",
     "build-jsx": "jsx js/components --extension jsx js/components",
     "build-css": "cat style/treeview.css style/style.css style/raiting_table.css  style/normalize.css style/bootstrap.min.css | cleancss -o style/style.min.css",
@@ -22,6 +21,7 @@
     "browserify": "^10.2.4",
     "react-tools": "^0.13.3",
     "uglify-js": "^2.4.24",
-    "webserver": "^1.1.2"
+    "webserver": "^1.1.2",
+    "clean-css": "3.3.9"
   }
 }

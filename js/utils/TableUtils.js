@@ -1,7 +1,7 @@
 function group(array){
-	var firstGroup = [1,2];
-	var secondGroup = [3,4];
-	var thirdGroup = [5];
+	var firstGroup = [1, 2];
+	var secondGroup = [3];
+	var thirdGroup = [4,5];
 	var groups = [];
 	array.forEach(function (item) {
 		var val = parseInt(item.cols[3]);

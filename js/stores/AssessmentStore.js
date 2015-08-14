@@ -44,7 +44,7 @@ function calculatePercents(groups) {
 	var onePercent = 100 / len;
 
 	firstGroup.forEach(function(item){
-		item.cols[5] = 35;
+		item.cols[5] = 20;
 		item.cols[4] = onePercent * firstGroup.length;
 	});
 	secondGroup.forEach(function(item){
@@ -52,7 +52,7 @@ function calculatePercents(groups) {
 		item.cols[4] = onePercent * secondGroup.length;
 	});
 	thirdGroup.forEach(function(item){
-		item.cols[5] = 5;
+		item.cols[5] = 20;
 		item.cols[4] = onePercent * thirdGroup.length;
 	});
 }

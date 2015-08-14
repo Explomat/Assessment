@@ -207,10 +207,10 @@ var AssessmentView = React.createClass({
 				</div>
 				<div className="panel-body">
 					<div style={isDisplayFirstTableStyle}>	
-						<TableTreeViewSecond data={this.state.subordinates} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт', 'План']}/>
+						<TableTreeViewSecond data={this.state.subordinates} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт распределения', 'Норма распределения']}/>
 					</div>
 					<div style={isDisplaySecondTableStyle}>
-						<TableTreeView data={this.state.collaborators} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт', 'План']} expandedNodeId={this.state.expandedNodeId}/>
+						<TableTreeView data={this.state.collaborators} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг сотрудника', 'Рейтинг Калибровок', 'Факт распределения', 'Норма распределения']} expandedNodeId={this.state.expandedNodeId}/>
 					</div>
 				</div>
 				<DownMenuTest />
