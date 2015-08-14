@@ -120,3 +120,6 @@ textarea {
 .down-menu button {
     margin-left: 20px;
 }
+.panel-default{
+    min-width:800px;
+}

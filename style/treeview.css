@@ -59,3 +59,8 @@ text-align: center;
     background: #cc0035;
     color:#fff;
     }
+
+    .topmenu>p{
+    margin: 5px auto;
+    float: left;
+}
