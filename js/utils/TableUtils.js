@@ -8,16 +8,16 @@ function group(array){
 		val = val || parseInt(item.cols[2]);
 		if (!val) return null;
 		if (firstGroup.indexOf(val) !== -1){
-			groups[0] = groups[0] || [];
-			groups[0].push(item);
+			groups[2] = groups[2] || [];
+			groups[2].push(item);
 		}
 		else if (secondGroup.indexOf(val) !== -1){
 			groups[1] = groups[1] || [];
 			groups[1].push(item);
 		}
 		else if(thirdGroup.indexOf(val) !== -1){
-			groups[2] = groups[2] || [];
-			groups[2].push(item);
+			groups[0] = groups[0] || [];
+			groups[0].push(item);
 		}
 	});
 	return groups;
