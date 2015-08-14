@@ -94,7 +94,7 @@ var DownMenuFirst = React.createClass({
 
 	render: function() {
 		return (
-			<div className="pull-right down-menu">
+			<div className="pull-right">
 				<button type="button" className="btn btn-default btn-sm" onClick={this.handleSaveChanges}>
 					<span>Сохранить изменения</span>
 				</button>
