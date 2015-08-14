@@ -36,7 +36,7 @@ text-align: center;
     font-weight: bold;
 }
 .category-tree .raiting-table__body ul.raiting-table__row:hover{
-    background: #E1E1E1;
+    background: #F6E8E8;  /* #F6E8E8 */
 }
 .category-tree:not(:first-child):before, .category-tree .has-children.open:not(:first-child):before{
     display: none;
