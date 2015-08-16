@@ -65,7 +65,7 @@ var TopMenu = React.createClass({
 						<span>Мое подразделение</span>
 					</button>
 				</div>
-				<p></p>
+				<p>Норма распределения | 4,5 - 20% | 3 - 60% | 1,2 - 20% |</p>
 				<div style={displayButton}>
 					<button title="Раскрыть всех" type="button" style={displayPlus} className="btn btn-default btn-sm pull-right" onClick={this.handleExpandAll}>
 						<span className="glyphicon glyphicon-plus"></span>

@@ -58,4 +58,12 @@ button[type="button"].btn.pull-right, button[type="button"].btn-primary{
     border-color: #cc0035;
     background: #cc0035;
     color:#fff;
+<<<<<<< HEAD
+=======
+    }
+
+    .topmenu>p{
+    margin: 5px auto;
+    float: left;
+>>>>>>> origin/tableTreeView
 }

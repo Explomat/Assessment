@@ -98,8 +98,16 @@ textarea {
     clear:both;
 };
 
+<<<<<<< HEAD
 .topmenu>p{
     margin: 5px auto;
     float: left;
+=======
+.down-menu button {
+    margin-left: 20px;
+}
+.panel-default{
+    min-width:800px;
+>>>>>>> origin/tableTreeView
 }
 
