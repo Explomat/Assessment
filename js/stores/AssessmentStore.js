@@ -5,7 +5,7 @@ var AssessmentConstants = require('../constants/AssessmentConstants');
 var extend = require('extend-object');
 var TableUtils = require('../utils/TableUtils');
 
-var _data = {}, _collaborators = [], _subordinates = [];
+var _data = {}, _collaborators = [], _subordinates = [], _saved = { isSaved: false, error: null };
 
 function findElem(id, array){
 	var stack = [];
@@ -27,34 +27,20 @@ function findElem(id, array){
 
 function loadAssessmentData(data) {
 	_data = data;
-	_collaborators = data;
+	_collaborators = data.collaborators;
 	var temp = JSON.parse(JSON.stringify(_collaborators));
 	temp.forEach(function(s){
 		delete s['children'];
 	})
 	_subordinates = temp;
+
+	_collaborators.forEach(function(col){
+		TableUtils.calculatePercents(TableUtils.group(col.children));
+	});
+
+	var groupsSubordinates = TableUtils.group(_subordinates || []);
+	TableUtils.calculatePercents(groupsSubordinates);
 	//_collaborators = data.collaborators;
-}
-
-function calculatePercents(groups) {
-	var firstGroup = groups[0] || [];
-	var secondGroup = groups[1] || [];
-	var thirdGroup = groups[2] || [];
-	var len = firstGroup.length + secondGroup.length + thirdGroup.length;
-	var onePercent = 100 / len;
-
-	firstGroup.forEach(function(item){
-		item.cols[5] = 20;
-		item.cols[4] = onePercent * firstGroup.length;
-	});
-	secondGroup.forEach(function(item){
-		item.cols[5] = 60;
-		item.cols[4] = onePercent * secondGroup.length;
-	});
-	thirdGroup.forEach(function(item){
-		item.cols[5] = 20;
-		item.cols[4] = onePercent * thirdGroup.length;
-	});
 }
 
 function changeValue(id, colNumber, val){
@@ -70,7 +56,7 @@ function changeValue(id, colNumber, val){
 		}
 		var parent = elemCollab.parent || {};
 		var groups = TableUtils.group(parent.children || []);
-		calculatePercents(groups);
+		TableUtils.calculatePercents(groups);
 	}
 	if (elemSubord.elem) {
 		for (var i = 0; i < elemSubord.elem.cols.length; i++){
@@ -80,8 +66,16 @@ function changeValue(id, colNumber, val){
 			}
 		}
 		var groups = TableUtils.group(_subordinates);
-		calculatePercents(groups);
+		TableUtils.calculatePercents(groups);
 	}
+}
+
+function savedData() {
+	_saved.isSaved = true;
+}
+
+function savedErrorData(err){
+	_saved.error = err;
 }
 
 var AssessmentStore = extend({}, EventEmitter.prototype, {
@@ -92,6 +86,18 @@ var AssessmentStore = extend({}, EventEmitter.prototype, {
 
 	getSubordinates: function () {
 		return _subordinates;
+	},
+
+	getBossType: function(){
+		return _data.bossType;
+	},
+
+	isSaved: function() {
+		return _saved.isSaved;
+	},
+
+	getErrorSaved: function(){
+		return _saved.error;
 	},
 
 	emitChange: function() {
@@ -114,6 +120,12 @@ AssessmentStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 		case ServerConstants.RECEIVE_DATA:
 			loadAssessmentData(action.data);
+			break;
+		case ServerConstants.DATA_SAVED:
+			savedData();
+			break;
+		case ServerConstants.DATA_ERROR_SAVED:
+			savedErrorData(err);
 			break;
 		case AssessmentConstants.CHANGE_COL_VALUE:
 			changeValue(action.id, action.colNumber, action.value);

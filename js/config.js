@@ -1,5 +1,5 @@
-var serverId = '6166852566696923932';
-var routerUrl = 'custom_web_template.html?object_id=6135330846971222087';
+var serverId = '6183925493772801062';
+var routerUrl = '/custom_web_template.html?object_id=6135330846971222087';
 
 var url = {
 	defaultPath: routerUrl.concat('&server_id='.concat(serverId)),

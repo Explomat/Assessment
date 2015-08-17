@@ -22,7 +22,7 @@ var AssessmentActions = {
 	},
 
 	saveChanges: function(data) {
-		AssessmentAPI.saveData().then(function(){
+		AssessmentAPI.saveData(data).then(function(){
 			AppDispatcher.handleData({
 				actionType: ServerConstants.DATA_SAVED
 			});

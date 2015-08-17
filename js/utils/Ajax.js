@@ -1,7 +1,7 @@
 var Promise = require('es6-promise').Promise;
 var AssessmentData = require('../data/AssessmentData');
 var Storage = require('./Storage');
-var AJAX_TIME_OVER = 10000;
+var AJAX_TIME_OVER = 30000;
 
 module.exports = {
 

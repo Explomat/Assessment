@@ -55,13 +55,14 @@ var TopMenu = React.createClass({
 		var displayPlus = { display : this.props.isExpand ? "none" : "block" };
 		var displayMinus = { display : this.props.isExpand ? "block" : "none" };
 		var displayButton = { display : this.state.isActiveFirstButton ? "none": "block" };
+		var displaySubdivision = { display : this.props.bossType == 0 ? "none" : "inline-block" };
 		return (
 			<div className="clearfix topmenu">
 				<div className="pull-left">
 					<button type="button" className={firstButton} onClick={this.handleSetSubordinates}>
 						<span>Моя команда</span>
 					</button>
-					<button type="button" className={secondButton} onClick={this.handleSetSubdivision}>
+					<button style={displaySubdivision} type="button" className={secondButton} onClick={this.handleSetSubdivision}>
 						<span>Мое подразделение</span>
 					</button>
 					<span className="label label-info">Норма распределения &nbsp;&nbsp; 4,5 - 20% | 3 - 60% | 1,2 - 20% </span>
@@ -82,9 +83,9 @@ var TopMenu = React.createClass({
 var DownMenuFirst = React.createClass({
 
 	handleSaveChanges: function() {
-		alert("Изменения сохранены!");
-		var data = AssessmentStore.getData();
+		var data = AssessmentStore.getCollaborators();
 		AssessmentActions.saveChanges(data);
+		alert("Изменения сохранены!");
 	},
 
 	handleApprove: function(){
@@ -109,9 +110,9 @@ var DownMenuFirst = React.createClass({
 var DownMenuSecond = React.createClass({
 
 	handleSaveChanges: function() {
-		alert("Изменения сохранены!");
-		var data = AssessmentStore.getData();
+		var data = AssessmentStore.getCollaborators();
 		AssessmentActions.saveChanges(data);
+		alert("Изменения сохранены!");
 	},
 
 	handleSendForApprove: function(){
@@ -177,10 +178,11 @@ var AssessmentView = React.createClass({
 	render:function () {
 		var isDisplayFirstTableStyle = { display : this.state.isDisplayFirstTable ? "block" : "none" };
 		var isDisplaySecondTableStyle = { display : this.state.isDisplaySecondTable ? "block" : "none" };
+		var bossType = AssessmentStore.getBossType();
 		return (
 			<div className="panel panel-default">
 				<div className="panel-heading">
-					<TopMenu handleExpandAll={this.handleExpandAll} isExpand={this.state.isExpand} handleSetSubdivision={this.handleSetSubdivision} handleSetSubordinates={this.handleSetSubordinates}/>
+					<TopMenu bossType={bossType} handleExpandAll={this.handleExpandAll} isExpand={this.state.isExpand} handleSetSubdivision={this.handleSetSubdivision} handleSetSubordinates={this.handleSetSubordinates}/>
 				</div>
 				<div className="panel-body">
 					<div style={isDisplayFirstTableStyle}>	

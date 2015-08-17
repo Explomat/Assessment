@@ -23,6 +23,28 @@ function group(array){
 	return groups;
 }
 
+function calculatePercents(groups) {
+	var firstGroup = groups[0] || [];
+	var secondGroup = groups[1] || [];
+	var thirdGroup = groups[2] || [];
+	var len = firstGroup.length + secondGroup.length + thirdGroup.length;
+	var onePercent = 100 / len;
+
+	firstGroup.forEach(function(item){
+		item.cols[5] = 20;
+		item.cols[4] = onePercent * firstGroup.length;
+	});
+	secondGroup.forEach(function(item){
+		item.cols[5] = 60;
+		item.cols[4] = onePercent * secondGroup.length;
+	});
+	thirdGroup.forEach(function(item){
+		item.cols[5] = 20;
+		item.cols[4] = onePercent * thirdGroup.length;
+	});
+}
+
+
 function isEditCol(arrayEdit, index){
 	var isEdit = false;
 	arrayEdit.forEach(function(item){
@@ -34,5 +56,6 @@ function isEditCol(arrayEdit, index){
 
 module.exports = {
 	group: group,
-	isEditCol: isEditCol
+	isEditCol: isEditCol,
+	calculatePercents: calculatePercents
 }

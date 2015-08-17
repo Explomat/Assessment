@@ -31,42 +31,72 @@ function stringifyWT(obj) {
 }
 
 function getBoss(userId) {
-	return OpenDoc(UrlFromDocID(userId)).TopElem.custom_elems.ObtainChildByKey('CodeBoss').value;
-}
-
-function getFuncBoss(userId){
-	return OpenDoc(UrlFromDocID(userId)).TopElem.custom_elems.ObtainChildByKey('CodeBossMain').value;
+	try {
+		var b = OpenDoc(UrlFromDocID(userId)).TopElem.custom_elems.ObtainChildByKey('CodeBoss').value;
+	}
+	catch(e) { alert(e); return  ''; }
+	return b;
 }
 
 function getQuery(userId, bossType){
-	return XQuery("sql:select collaborator.id, collaborators.fullname,
-					collaborator.data.value('(collaborator/custom_elems/custom_elem[name=''rating''])[1]/value','varchar(max)') as raiting
+	return XQuery("sql:select distinct collaborator.id, collaborators.fullname,
+					collaborator.data.value('(collaborator/custom_elems/custom_elem[name=''rating''])[1]/value','varchar(max)') as rating,
+					collaborator.data.value('(collaborator/custom_elems/custom_elem[name=''group_rating''])[1]/value','varchar(max)') as group_rating
 					from collaborator
 					inner join collaborators on collaborators.id = collaborator.id
+					inner join pas on pas.person_id = collaborator.id
 					where collaborators.is_dismiss = 0 
-					and collaborator.data.exist('collaborator/custom_elems/custom_elem[name = ''"+bossType+"'' and value[1]=''"+userId+"'']') = 1");
+					and collaborator.data.exist('collaborator/custom_elems/custom_elem[name = ''"+bossType+"'' and value[1]=''"+userId+"'']') = 1 
+					and pas.is_done = 1");
 }
 
 function getData(){
-	var codeBossMain = 'CodeBossMain';
 	var codeBoss = 'CodeBoss';
-	var boss = getBoss(curUserID);
-	var funcBoss = getFuncBoss(curUserID);
-	if (boss == '' || funcBoss == '') {
-		return;
-	}
-	var data = [];
+	var userId = Int(curUserID);
+	if (getBoss(userId) == '') return;
 
-	for (f in getQuery(curUserID, codeBossMain)){
-		funcBoss = {};
+	var bossType = 0;
+	var collaborators = [];
+	for (f in getQuery(userId, codeBoss)){
+		if (f.rating == '' || f.rating == null) continue;
+		boss = { id: f.id + '', cols: [ f.fullname + '', f.rating + '', f.rating + '', f.group_rating + '', "", "" ], edit:[3], children:[]};
 		for (c in getQuery(f.id, codeBoss)){
+			if (c.rating == '' || c.rating == null) continue;
+			boss.children.push({ id: c.id + '', cols: [ c.fullname + '', c.rating + '', c.rating + '', c.group_rating + '', "", "" ], edit:[3]});
+			bossType = 1;
+		}
+		collaborators.push(boss);
+	}
 
+	return stringifyWT(
+	{
+		bossType: bossType,
+		collaborators: collaborators
+	});
+}
+
+function saveData(queryObjects){
+	var collaborators = eval("t="+queryObjects.Body);
+	var errors = [];
+
+	for (col in collaborators) {
+		try {
+			colCard = OpenDoc(UrlFromDocID(Int(col.id)));
+			colCard.TopElem.custom_elems.ObtainChildByKey('rating_change').value = col.cols[3];
+			colCard.Save();
+		}
+		catch(e){ alert(e); errors.push(col.cols[0]); }
+		for (ch in col.children){
+			try {
+				colCard = OpenDoc(UrlFromDocID(Int(ch.id)));
+				colCard.TopElem.custom_elems.ObtainChildByKey('rating_change').value = ch.cols[3];
+				colCard.Save();
+			}
+			catch(e){ alert(e); errors.push(ch.cols[0]); }
 		}
 	}
+
+	if (errors.length > 0)
+		return errors.join(',');
 }
-
-function saveData(){
-
-}
-
 %>
