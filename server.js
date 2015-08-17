@@ -1,5 +1,4 @@
 <%
-
 function stringifyWT(obj) {
 	var type = DataType(obj);
 	var curObj = obj;
@@ -31,54 +30,43 @@ function stringifyWT(obj) {
 	return outStr;
 }
 
-function getExt(fileName) {
-	if (fileName == undefined)
-		return '';
-	var index = fileName.indexOf('.');
-	return index == -1 ? '' : fileName.substr(index + 1, fileName.length - index);
+function getBoss(userId) {
+	return OpenDoc(UrlFromDocID(userId)).TopElem.custom_elems.ObtainChildByKey('CodeBoss').value;
 }
 
-function uploadFile(queryObjects) {
-	try {
-		var name = queryObjects.Form.file_upload[0] + '';
-		var data = queryObjects.Form.file_upload;
-		var ext = getExt(name);
+function getFuncBoss(userId){
+	return OpenDoc(UrlFromDocID(userId)).TopElem.custom_elems.ObtainChildByKey('CodeBossMain').value;
+}
 
-		var userDoc = OpenDoc(UrlFromDocID(curUserID));
-		var docResource = OpenNewDoc( 'x-local://wtv/wtv_resource.xmd' ); 
-		docResource.TopElem.person_id = 6070152459256493433; 
-		docResource.TopElem.allow_unauthorized_download = true; 
-		docResource.TopElem.allow_download = true; 
-		docResource.TopElem.file_name = name;
-		docResource.TopElem.name = name;
-		docResource.TopElem.type = ext;
-		docResource.TopElem.person_fullname = userDoc.TopElem.lastname + ' ' + userDoc.TopElem.firstname + ' ' + userDoc.TopElem.middlename;
-		docResource.BindToDb();
-		docResource.TopElem.put_str(data, name); 
-		docResource.Save();
-		
-		return stringifyWT({
-			id: docResource.DocID,
-			name: name,
-			error: null
-		});
-			
+function getQuery(userId, bossType){
+	return XQuery("sql:select collaborator.id, collaborators.fullname,
+					collaborator.data.value('(collaborator/custom_elems/custom_elem[name=''rating''])[1]/value','varchar(max)') as raiting
+					from collaborator
+					inner join collaborators on collaborators.id = collaborator.id
+					where collaborators.is_dismiss = 0 
+					and collaborator.data.exist('collaborator/custom_elems/custom_elem[name = ''"+bossType+"'' and value[1]=''"+userId+"'']') = 1");
+}
+
+function getData(){
+	var codeBossMain = 'CodeBossMain';
+	var codeBoss = 'CodeBoss';
+	var boss = getBoss(curUserID);
+	var funcBoss = getFuncBoss(curUserID);
+	if (boss == '' || funcBoss == '') {
+		return;
 	}
-	catch(e){
-		alert(e);
-		return false;
+	var data = [];
+
+	for (f in getQuery(curUserID, codeBossMain)){
+		funcBoss = {};
+		for (c in getQuery(f.id, codeBoss)){
+
+		}
 	}
 }
 
-function removeImage(queryObjects) {
-	var id = Int(queryObjects.id);
-	try {
-		DeleteDoc(UrlFromDocID(id));
-	}
-	catch(e) {
-		alert(e);
-		return false;
-	}
-	return true;
+function saveData(){
+
 }
+
 %>

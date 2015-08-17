@@ -41,6 +41,14 @@ textarea {
     margin-right: 25px;
 }
 
+.topmenu>div:first-child{
+    width:75%;
+}
+
+.topmenu>div:first-child>span {
+    font-size: 100%;
+}
+
 .dropdown-menu-xs {
     font-size: 12px;
 }

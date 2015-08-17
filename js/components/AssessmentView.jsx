@@ -64,8 +64,8 @@ var TopMenu = React.createClass({
 					<button type="button" className={secondButton} onClick={this.handleSetSubdivision}>
 						<span>Мое подразделение</span>
 					</button>
+					<span className="label label-info">Норма распределения &nbsp;&nbsp; 4,5 - 20% | 3 - 60% | 1,2 - 20% </span>
 				</div>
-				<p>Норма распределения | 4,5 - 20% | 3 - 60% | 1,2 - 20% |</p>
 				<div style={displayButton}>
 					<button title="Раскрыть всех" type="button" style={displayPlus} className="btn btn-default btn-sm pull-right" onClick={this.handleExpandAll}>
 						<span className="glyphicon glyphicon-plus"></span>
