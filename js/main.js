@@ -134,17 +134,8 @@ window.onload = function () {
 	    }
 	]);
 	React.render(React.createElement(AssessmentView), app);*/
-
-	/*AssessmentActions.receiveData([{"id":"5885323940457966974","cols":["Габдуллин Дамир Габдульбариевич","1","1","","",""],"edit":["3"
-],"children":[{"id":"5749133135782313374","cols":["Морозова Екатерина Игоревна","0","0","1","",""],"edit"
-:["3"]},{"id":"5943241687012699293","cols":["Беловоденко Кирилл Вадимович","2","3","0","",""],"edit"
-:["3"]},{"id":"6070152459256493433","cols":["Матвеев Савва Янович","2","2","1","",""],"edit":["3"]}]
-}]);
-	React.render(React.createElement(AssessmentView), app);*/
-	alert(123);
 	AssessmentAPI.getData().then(function(data){
 		try {
-			console.log(data);
 			AssessmentActions.receiveData(JSON.parse(data));
 			React.render(React.createElement(AssessmentView), app);
 		}

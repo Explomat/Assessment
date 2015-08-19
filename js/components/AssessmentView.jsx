@@ -100,6 +100,10 @@ var DownMenu = {
 		AssessmentActions.approve();
 	},
 
+	shouldComponentUpdate: function(nextProps){
+		return (this.props.isSaved !== nextProps.isSaved && this.props.errorSaved !== nextProps.errorSaved)
+	},
+
 	componentWillReceiveProps: function(nextProps){
 		if (nextProps.isSaved === true && nextProps.errorSaved === null){
 			alert("Изменения сохранены!");
