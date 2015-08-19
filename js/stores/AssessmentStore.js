@@ -72,9 +72,11 @@ function changeValue(id, colNumber, val){
 
 function savedData() {
 	_saved.isSaved = true;
+	_saved.error = null;
 }
 
 function savedErrorData(err){
+	_saved.isSaved = false;
 	_saved.error = err;
 }
 

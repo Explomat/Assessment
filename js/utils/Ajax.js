@@ -61,9 +61,6 @@ module.exports = {
                 }
               }
             };
-             xmlHttp.onerror = function() {
-              reject("Network Error");
-            };
 
             xmlHttp.send(data || null);
 
