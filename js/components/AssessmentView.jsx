@@ -7,7 +7,9 @@ var TableTreeViewSecond = require('./modules/TableTreeViewSecond');
 function getData() {
 	return {
 		collaborators: AssessmentStore.getCollaborators(),
-		subordinates: AssessmentStore.getSubordinates()
+		subordinates: AssessmentStore.getSubordinates(),
+		isSaved: AssessmentStore.isSaved(),
+		errorSaved: AssessmentStore.getErrorSaved()
 	};
 }
 
@@ -80,25 +82,50 @@ var TopMenu = React.createClass({
 	}
 });
 
-var DownMenuFirst = React.createClass({
+var DownMenu = {
 
 	handleSaveChanges: function() {
 		var data = AssessmentStore.getCollaborators();
 		AssessmentActions.saveChanges(data);
-		alert("Изменения сохранены!");
+		//alert("Изменения сохранены!");
 	},
 
 	handleApprove: function(){
-		alert("Отправлено на подтверждение!")
+		//alert("Отправлено на подтверждение!")
 		AssessmentActions.sendForApprove();
 	},
+
+	handleSendForApprove: function(){
+		//alert("Подтверждено!")
+		AssessmentActions.approve();
+	},
+
+	componentWillReceiveProps: function(nextProps){
+		if (nextProps.isSaved === true && nextProps.errorSaved === null){
+			alert("Изменения сохранены!");
+		}
+		else if (nextProps.isSaved === false && nextProps.errorSaved !== null){
+			alert("Изменения не удалось сохранить! \r\n " + nextProps.errorSaved);
+		}
+	},
+
+	getBaseMark: function() {
+		return (
+			<button type="button" className="btn btn-default btn-sm" onClick={this.handleSaveChanges}>
+				<span>Сохранить изменения</span>
+			</button>
+		);
+	}
+}
+
+var DownMenuFirst = React.createClass({
+
+	mixins: [DownMenu],
 
 	render: function() {
 		return (
 			<div className="pull-right">
-				<button type="button" className="btn btn-default btn-sm" onClick={this.handleSaveChanges}>
-					<span>Сохранить изменения</span>
-				</button>
+				{this.getBaseMark()}
 				<button type="button" className="btn btn-default btn-sm" onClick={this.handleApprove}>
 					<span>Отправить на подтверждение</span>
 				</button>
@@ -109,23 +136,12 @@ var DownMenuFirst = React.createClass({
 
 var DownMenuSecond = React.createClass({
 
-	handleSaveChanges: function() {
-		var data = AssessmentStore.getCollaborators();
-		AssessmentActions.saveChanges(data);
-		alert("Изменения сохранены!");
-	},
-
-	handleSendForApprove: function(){
-		alert("Подтверждено!")
-		AssessmentActions.approve();
-	},
+	mixins: [DownMenu],
 
 	render: function() {
 		return (
 			<div className="pull-right">
-				<button type="button" className="btn btn-default btn-sm" onClick={this.handleSaveChanges}>
-					<span>Сохранить изменения</span>
-				</button>
+				{this.getBaseMark()}
 				<button type="button" className="btn btn-default btn-sm" onClick={this.handleSendForApprove}>
 					<span>Подтвердить</span>
 				</button>
@@ -194,10 +210,10 @@ var AssessmentView = React.createClass({
 				</div>
 				<div className="panel-footer clearfix">
 					<div style={isDisplayFirstTableStyle}>
-						<DownMenuFirst />
+						<DownMenuFirst isSaved={this.state.isSaved} errorSaved={this.state.errorSaved}/>
 					</div>
 					<div style={isDisplaySecondTableStyle}>
-						<DownMenuSecond />
+						<DownMenuSecond isSaved={this.state.isSaved} errorSaved={this.state.errorSaved}/>
 					</div>
 				</div>
 			</div>

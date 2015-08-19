@@ -3,7 +3,7 @@ var Ajax = require('../utils/Ajax');
 
 module.exports = {
 
-	getData: function() {
+	getData: function(resolve) {
 		return Ajax.sendRequest(Config.url.createPath({action_name: 'getData'}));
 	},
 

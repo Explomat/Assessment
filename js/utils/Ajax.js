@@ -72,9 +72,6 @@ module.exports = {
                 }
               }
             };
-             xmlHttp.onerror = function() {
-              reject("Network Error");
-            };
 
             if (isSync){
                 var timeout = setTimeout( function(){ 
