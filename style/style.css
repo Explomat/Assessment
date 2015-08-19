@@ -87,10 +87,9 @@ textarea {
 
 
 #container{
-    min-width: 600px;
+    min-width: 900px;
     font-family:Calibri, Helvetica, serif;
     color:#444;
-    width:55%;
     margin:100px auto 100px;
     padding:30px;
     border:1px solid #ddd;

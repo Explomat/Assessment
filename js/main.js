@@ -141,9 +141,10 @@ window.onload = function () {
 :["3"]},{"id":"6070152459256493433","cols":["Матвеев Савва Янович","2","2","1","",""],"edit":["3"]}]
 }]);
 	React.render(React.createElement(AssessmentView), app);*/
-
+	alert(123);
 	AssessmentAPI.getData().then(function(data){
 		try {
+			console.log(data);
 			AssessmentActions.receiveData(JSON.parse(data));
 			React.render(React.createElement(AssessmentView), app);
 		}

@@ -46,14 +46,25 @@ module.exports = {
             requestType = requestType || 'GET';
             isSync = isSync || true;
 
+            console.log(xmlHttp.onreadystatechange);
             xmlHttp.open(requestType, url, isSync);
+            //xmlHttp.onreadystatechange = xmlHttp.onreadystatechange == undefined ? xmlHttp.onload : xmlHttp.onreadystatechange;
+            
+
+            xmlHttp.send(data || null);
+
             xmlHttp.onreadystatechange = function() {
               if (xmlHttp.readyState == 4) {
                 if (timeout)
                     clearTimeout(timeout);
 
                 if(xmlHttp.status == 200){
-                   resolve(xmlHttp.responseText);
+                    try {
+                        resolve(xmlHttp.responseText);
+                    }
+                    catch(e){
+                        alert(e);
+                    }
                 }
                 else {
                     console.log(xmlHttp.status);
@@ -64,8 +75,6 @@ module.exports = {
              xmlHttp.onerror = function() {
               reject("Network Error");
             };
-
-            xmlHttp.send(data || null);
 
             if (isSync){
                 var timeout = setTimeout( function(){ 
