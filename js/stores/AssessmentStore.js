@@ -80,6 +80,11 @@ function savedErrorData(err){
 	_saved.error = err;
 }
 
+function setDefaultSaved() {
+	_saved.isSaved = false;
+	_saved.error = null;
+}
+
 var AssessmentStore = extend({}, EventEmitter.prototype, {
 
 	getCollaborators: function(){
@@ -127,10 +132,13 @@ AssessmentStore.dispatchToken = AppDispatcher.register(function(payload) {
 			savedData();
 			break;
 		case ServerConstants.DATA_ERROR_SAVED:
-			savedErrorData(err);
+			savedErrorData(action.error);
 			break;
 		case AssessmentConstants.CHANGE_COL_VALUE:
 			changeValue(action.id, action.colNumber, action.value);
+			break;
+		case AssessmentConstants.SET_DEFAULT_SAVED:
+			setDefaultSaved();
 			break;
 		default:
 			return true;

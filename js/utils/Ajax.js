@@ -1,7 +1,7 @@
 var Promise = require('es6-promise').Promise;
 var AssessmentData = require('../data/AssessmentData');
 var Storage = require('./Storage');
-var AJAX_TIME_OVER = 30000;
+var AJAX_TIME_OVER = 10000;
 
 module.exports = {
 
@@ -46,25 +46,15 @@ module.exports = {
             requestType = requestType || 'GET';
             isSync = isSync || true;
 
-            console.log(xmlHttp.onreadystatechange);
             xmlHttp.open(requestType, url, isSync);
-            //xmlHttp.onreadystatechange = xmlHttp.onreadystatechange == undefined ? xmlHttp.onload : xmlHttp.onreadystatechange;
             
-
-            xmlHttp.send(data || null);
-
             xmlHttp.onreadystatechange = function() {
               if (xmlHttp.readyState == 4) {
                 if (timeout)
                     clearTimeout(timeout);
 
                 if(xmlHttp.status == 200){
-                    try {
-                        resolve(xmlHttp.responseText);
-                    }
-                    catch(e){
-                        alert(e);
-                    }
+                    resolve(xmlHttp.responseText);
                 }
                 else {
                     console.log(xmlHttp.status);
@@ -72,6 +62,8 @@ module.exports = {
                 }
               }
             };
+
+            xmlHttp.send(data || null);
 
             if (isSync){
                 var timeout = setTimeout( function(){ 

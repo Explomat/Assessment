@@ -100,16 +100,14 @@ var DownMenu = {
 		AssessmentActions.approve();
 	},
 
-	shouldComponentUpdate: function(nextProps){
-		return (this.props.isSaved !== nextProps.isSaved && this.props.errorSaved !== nextProps.errorSaved)
-	},
-
 	componentWillReceiveProps: function(nextProps){
 		if (nextProps.isSaved === true && nextProps.errorSaved === null){
+			AssessmentActions.setDefaultSaved();
 			alert("Изменения сохранены!");
 		}
 		else if (nextProps.isSaved === false && nextProps.errorSaved !== null){
-			alert("Изменения не удалось сохранить! \r\n " + nextProps.errorSaved);
+			AssessmentActions.setDefaultSaved();
+			alert("Изменения не удалось сохранить : \r\n " + nextProps.errorSaved);
 		}
 	},
 

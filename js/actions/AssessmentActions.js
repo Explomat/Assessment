@@ -22,10 +22,18 @@ var AssessmentActions = {
 	},
 
 	saveChanges: function(data) {
-		AssessmentAPI.saveData(data).then(function(){
-			AppDispatcher.handleData({
-				actionType: ServerConstants.DATA_SAVED
-			});
+		AssessmentAPI.saveData(data).then(function(data){
+			if (!data){
+				AppDispatcher.handleData({
+					actionType: ServerConstants.DATA_SAVED
+				});
+			}
+			else{
+				AppDispatcher.handleData({
+					actionType: ServerConstants.DATA_ERROR_SAVED,
+					error: err
+				});
+			}
 		},
 		function(err){
 			AppDispatcher.handleData({
@@ -33,6 +41,14 @@ var AssessmentActions = {
 				error: err
 			});
 		});
+	},
+
+	setDefaultSaved: function(){
+		setTimeout(function(){
+			AppDispatcher.handleAction({
+				actionType: AssessmentConstants.SET_DEFAULT_SAVED
+			});
+		}, 1);
 	},
 
 	approve: function(){
