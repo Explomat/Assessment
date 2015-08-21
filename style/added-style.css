@@ -17,3 +17,11 @@ html, body{
 body {
     overflow-y: auto !important;
 }
+
+footer {
+    position: relative !important;
+}
+
+#assessment_miratorg {
+	overflow-x: scroll;
+}

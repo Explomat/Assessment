@@ -7,9 +7,7 @@ var TableTreeViewSecond = require('./modules/TableTreeViewSecond');
 function getData() {
 	return {
 		collaborators: AssessmentStore.getCollaborators(),
-		subordinates: AssessmentStore.getSubordinates(),
-		isSaved: AssessmentStore.isSaved(),
-		errorSaved: AssessmentStore.getErrorSaved()
+		subordinates: AssessmentStore.getSubordinates()
 	};
 }
 
@@ -86,29 +84,18 @@ var DownMenu = {
 
 	handleSaveChanges: function() {
 		var data = AssessmentStore.getCollaborators();
-		AssessmentActions.saveChanges(data);
-		//alert("Изменения сохранены!");
+		AssessmentActions.saveChanges(data, function(error){
+			if (!error) alert("Изменения сохранены!");
+			else alert("Изменения не удалось сохранить : \r\n " + error);
+		});
 	},
 
 	handleApprove: function(){
-		//alert("Отправлено на подтверждение!")
 		AssessmentActions.sendForApprove();
 	},
 
 	handleSendForApprove: function(){
-		//alert("Подтверждено!")
 		AssessmentActions.approve();
-	},
-
-	componentWillReceiveProps: function(nextProps){
-		if (nextProps.isSaved === true && nextProps.errorSaved === null){
-			AssessmentActions.setDefaultSaved();
-			alert("Изменения сохранены!");
-		}
-		else if (nextProps.isSaved === false && nextProps.errorSaved !== null){
-			AssessmentActions.setDefaultSaved();
-			alert("Изменения не удалось сохранить : \r\n " + nextProps.errorSaved);
-		}
 	},
 
 	getBaseMark: function() {
@@ -212,10 +199,10 @@ var AssessmentView = React.createClass({
 				</div>
 				<div className="panel-footer clearfix">
 					<div style={isDisplayFirstTableStyle}>
-						<DownMenuFirst isSaved={this.state.isSaved} errorSaved={this.state.errorSaved}/>
+						<DownMenuFirst />
 					</div>
 					<div style={isDisplaySecondTableStyle}>
-						<DownMenuSecond isSaved={this.state.isSaved} errorSaved={this.state.errorSaved}/>
+						<DownMenuSecond />
 					</div>
 				</div>
 			</div>

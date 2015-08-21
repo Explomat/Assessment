@@ -1,30 +1,7 @@
 var Promise = require('es6-promise').Promise;
-var AssessmentData = require('../data/AssessmentData');
-var Storage = require('./Storage');
 var AJAX_TIME_OVER = 10000;
 
 module.exports = {
-
-    getData: function() {
-        return new Promise(function(resolve, reject){
-            AssessmentData.init();
-
-            //imitatation loading
-            setTimeout(function(){
-                resolve(Storage.getItem('collaborators'));
-            }, 100);
-        });
-    },
-
-    saveQuestionData: function(data) {
-        return new Promise(function(resolve, reject){
-            //imitatation loading
-            setTimeout(function(){
-                Storage.setItem('question', data);
-                resolve();
-            }, 100);
-        });
-    },
 
     getXmlHttp: function(){
         var xmlHttp;

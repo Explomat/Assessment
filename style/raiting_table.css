@@ -11,10 +11,9 @@
 	width: 100%;
 	height: 50px;
 	padding-right: 17px;
-	background: #E45555;
+	background: #CC0035;
     box-shadow: inset 0 -40px 100px -50px #790000;
 	color: #FFFFFF;
-	text-shadow:1px 1px 1px #914343;;
 }
 div.panel-body{
 	padding: 0;
@@ -32,6 +31,7 @@ div.panel-body{
 	height: 50px;
 	text-align: center;
 	vertical-align: middle;
+	float:none;
 }
 .table-container .raiting-table--scroll{
 	overflow-y: scroll;

@@ -21,34 +21,13 @@ var AssessmentActions = {
 		});
 	},
 
-	saveChanges: function(data) {
-		AssessmentAPI.saveData(data).then(function(data){
-			if (!data){
-				AppDispatcher.handleData({
-					actionType: ServerConstants.DATA_SAVED
-				});
-			}
-			else{
-				AppDispatcher.handleData({
-					actionType: ServerConstants.DATA_ERROR_SAVED,
-					error: err
-				});
-			}
+	saveChanges: function(data, callBack) {
+		AssessmentAPI.saveData(data).then(function(_err){
+			if (callBack) callBack(_err);
 		},
 		function(err){
-			AppDispatcher.handleData({
-				actionType: ServerConstants.DATA_ERROR_SAVED,
-				error: err
-			});
+			if (callBack) callBack(err);
 		});
-	},
-
-	setDefaultSaved: function(){
-		setTimeout(function(){
-			AppDispatcher.handleAction({
-				actionType: AssessmentConstants.SET_DEFAULT_SAVED
-			});
-		}, 1);
 	},
 
 	approve: function(){

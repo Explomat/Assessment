@@ -5,7 +5,7 @@ var AssessmentConstants = require('../constants/AssessmentConstants');
 var extend = require('extend-object');
 var TableUtils = require('../utils/TableUtils');
 
-var _data = {}, _collaborators = [], _subordinates = [], _saved = { isSaved: false, error: null };
+var _data = {}, _collaborators = [], _subordinates = [];
 
 function findElem(id, array){
 	var stack = [];
@@ -70,21 +70,6 @@ function changeValue(id, colNumber, val){
 	}
 }
 
-function savedData() {
-	_saved.isSaved = true;
-	_saved.error = null;
-}
-
-function savedErrorData(err){
-	_saved.isSaved = false;
-	_saved.error = err;
-}
-
-function setDefaultSaved() {
-	_saved.isSaved = false;
-	_saved.error = null;
-}
-
 var AssessmentStore = extend({}, EventEmitter.prototype, {
 
 	getCollaborators: function(){
@@ -128,17 +113,8 @@ AssessmentStore.dispatchToken = AppDispatcher.register(function(payload) {
 		case ServerConstants.RECEIVE_DATA:
 			loadAssessmentData(action.data);
 			break;
-		case ServerConstants.DATA_SAVED:
-			savedData();
-			break;
-		case ServerConstants.DATA_ERROR_SAVED:
-			savedErrorData(action.error);
-			break;
 		case AssessmentConstants.CHANGE_COL_VALUE:
 			changeValue(action.id, action.colNumber, action.value);
-			break;
-		case AssessmentConstants.SET_DEFAULT_SAVED:
-			setDefaultSaved();
 			break;
 		default:
 			return true;
