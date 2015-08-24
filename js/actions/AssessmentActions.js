@@ -30,12 +30,13 @@ var AssessmentActions = {
 		});
 	},
 
-	approve: function(){
-
-	},
-
-	sendForApprove: function(){
-
+	sendForApprove: function(callBack){
+		AssessmentAPI.sendForApprove().then(function(_err){
+			if (callBack) callBack(_err);
+		},
+		function(err){
+			if (callBack) callBack(err);
+		});
 	}
 }
 

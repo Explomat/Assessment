@@ -10,16 +10,8 @@
 
 ::selection { background-color: transparent; };*/
 
-html, body{
-    height: 100% !important;
-}
-
 body {
     overflow-y: auto !important;
-}
-
-footer {
-    position: relative !important;
 }
 
 #assessment_miratorg {

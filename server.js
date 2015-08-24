@@ -1,4 +1,6 @@
 <%
+var NOTIFICATION_NAME = "Assessment_Notification";
+
 function stringifyWT(obj) {
 	var type = DataType(obj);
 	var curObj = obj;
@@ -41,7 +43,7 @@ function getBoss(userId) {
 function getQuery(userId, bossType){
 	return XQuery("sql:select distinct collaborator.id, collaborators.fullname,
 					collaborator.data.value('(collaborator/custom_elems/custom_elem[name=''rating''])[1]/value','varchar(max)') as rating,
-					collaborator.data.value('(collaborator/custom_elems/custom_elem[name=''group_rating''])[1]/value','varchar(max)') as group_rating
+					collaborator.data.value('(collaborator/custom_elems/custom_elem[name=''rating_change''])[1]/value','varchar(max)') as rating_change
 					from collaborator
 					inner join collaborators on collaborators.id = collaborator.id
 					inner join pas on pas.person_id = collaborator.id
@@ -50,19 +52,18 @@ function getQuery(userId, bossType){
 					and pas.is_done = 1");
 }
 
-function getData(){
+function getData(queryObjects){
 	var codeBoss = 'CodeBoss';
 	var userId = Int(curUserID);
-	if (getBoss(userId) == '') return;
 
 	var bossType = 0;
 	var collaborators = [];
 	for (f in getQuery(userId, codeBoss)){
 		if (f.rating == '' || f.rating == null) continue;
-		boss = { id: f.id + '', cols: [ f.fullname + '', f.rating + '', f.rating + '', f.group_rating + '', "", "" ], edit:[3], children:[]};
+		boss = { id: f.id + '', cols: [ f.fullname + '', f.rating + '', f.rating + '', f.rating_change + '', "", "" ], edit:[3], children:[]};
 		for (c in getQuery(f.id, codeBoss)){
 			if (c.rating == '' || c.rating == null) continue;
-			boss.children.push({ id: c.id + '', cols: [ c.fullname + '', c.rating + '', c.rating + '', c.group_rating + '', "", "" ], edit:[3]});
+			boss.children.push({ id: c.id + '', cols: [ c.fullname + '', c.rating + '', c.rating + '', c.rating_change + '', "", "" ], edit:[3]});
 			bossType = 1;
 		}
 		collaborators.push(boss);
@@ -95,8 +96,19 @@ function saveData(queryObjects){
 			catch(e){ alert(e); errors.push(ch.cols[0]); }
 		}
 	}
-
+	
 	if (errors.length > 0)
 		return errors.join(',');
 }
+
+function sendForApprove(queryObjects) {
+	var boss = getBoss(curUserID);
+	var error = 'Не удалось отправить на подтверждение, т.к. нет прямого руководителя!';
+	if (boss == '') return error;
+	try {
+		tools.create_notification(NOTIFICATION_NAME, OpenDoc(UrlFromDocID(Int(boss))).TopElem.id, '', curUserID);
+	}	
+	catch(e) { return error; }
+}
+
 %>

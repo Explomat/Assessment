@@ -82,7 +82,7 @@ var TopMenu = React.createClass({
 
 var DownMenu = {
 
-	handleSaveChanges: function() {
+	handleApprove: function(){
 		var data = AssessmentStore.getCollaborators();
 		AssessmentActions.saveChanges(data, function(error){
 			if (!error) alert("Изменения сохранены!");
@@ -90,17 +90,16 @@ var DownMenu = {
 		});
 	},
 
-	handleApprove: function(){
-		AssessmentActions.sendForApprove();
-	},
-
 	handleSendForApprove: function(){
-		AssessmentActions.approve();
+		AssessmentActions.sendForApprove(function(error){
+			if (!error) alert("Уведомление о подтверждении отправлено!");
+			else alert("Уведомление о подтверждении отправить не удалось : \r\n " + error);
+		});
 	},
 
 	getBaseMark: function() {
 		return (
-			<button type="button" className="btn btn-default btn-sm" onClick={this.handleSaveChanges}>
+			<button type="button" className="btn btn-default btn-sm" onClick={this.handleApprove}>
 				<span>Сохранить изменения</span>
 			</button>
 		);
@@ -115,7 +114,7 @@ var DownMenuFirst = React.createClass({
 		return (
 			<div className="pull-right">
 				{this.getBaseMark()}
-				<button type="button" className="btn btn-default btn-sm" onClick={this.handleApprove}>
+				<button type="button" className="btn btn-default btn-sm" onClick={this.handleSendForApprove}>
 					<span>Отправить на подтверждение</span>
 				</button>
 			</div>
@@ -131,7 +130,7 @@ var DownMenuSecond = React.createClass({
 		return (
 			<div className="pull-right">
 				{this.getBaseMark()}
-				<button type="button" className="btn btn-default btn-sm" onClick={this.handleSendForApprove}>
+				<button type="button" className="btn btn-default btn-sm" onClick={this.handleApprove}>
 					<span>Подтвердить</span>
 				</button>
 			</div>

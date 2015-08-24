@@ -6,7 +6,7 @@ var AssessmentView = require('./components/AssessmentView');
 window.onload = function () {
 	var app = document.getElementById('app');
 
-	AssessmentActions.receiveData({collaborators: [
+	/*AssessmentActions.receiveData({collaborators: [
 		{
 		  "id": 2,
 		  "cols": ["Петров Михаил Валерьевич", 2, 2, "", "66", "20"],
@@ -133,8 +133,8 @@ window.onload = function () {
 	      ]
 	    }
 	]});
-	React.render(React.createElement(AssessmentView), app);
-	/*AssessmentAPI.getData().then(function(data){
+	React.render(React.createElement(AssessmentView), app);*/
+	AssessmentAPI.getData().then(function(data){
 		try {
 			AssessmentActions.receiveData(JSON.parse(data));
 			React.render(React.createElement(AssessmentView), app);
@@ -142,5 +142,5 @@ window.onload = function () {
 		catch(e){
 			console.log(e);
 		}
-	});*/
+	});
 }
