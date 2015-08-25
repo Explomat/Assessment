@@ -108,8 +108,7 @@ input.form-control{
 }
 .raiting-table__row li>input.not-equal, .raiting-table__row li.not-equal{
 	background-color: #FFDA57;
-	border-color: #FFDA57;
-	border-radius: 5px;
+	border: 1px solid #FFF;
 }
 
 .raiting-table__row a.over, .raiting-table__row li.over{
@@ -121,4 +120,11 @@ input.form-control{
 	text-align: center;
 	vertical-align: middle;
 	border: 1px solid #FFF;
+}
+
+input {
+	width: 100%;
+	height: 35px;
+	border-radius: 5px;
+	outline: 0;
 }
