@@ -1,7 +1,7 @@
 var React = require('react/addons');
 var TextView = require('./Text').TextView;
 var TableUtils = require('../../utils/TableUtils');
-var MAX_ELEMS = 5;
+var MAX_ELEMS = 4;
 
 var GroupNode = React.createClass({
 
@@ -124,7 +124,7 @@ var TreeNode = React.createClass({
 
 		var firstVal = parseInt(this.props.data.cols[len-2]);
 		var secondVal = parseInt(this.props.data.cols[len-1]);
-		var firstClass = firstVal > secondVal && this.props.len > MAX_ELEMS ? 'over' : '';
+		var firstClass = firstVal > secondVal && this.props.len > MAX_ELEMS && TableUtils.isItemInThirdGroup(this.props.data) ? 'over' : '';
 		elems.push(<GroupNode key={len-2} classes={classes + " data" + len} classesForA = {firstClass} value={firstVal+"%"} isFirst={isFirst} height={height}/>);
 		elems.push(<GroupNode key={len-1} classes={classes + " data" + (len + 1)} value={secondVal+"%"} isFirst={isFirst} height={height}/>)
 
@@ -160,7 +160,7 @@ var CategoryTree = React.createClass({
 			ch.forEach(function(c, i){
 				var isFirst = i === 0 ? true : false;
 				var height = isFirst ? ch.length * 35 : 0;
-				elems.push(<TreeNode key={c.id + index + i} data={c} isExpand={this.props.isExpand} changeColValue={this.changeColValue} isFirst={isFirst} height={height} len={this.props.data.length}/>)
+				elems.push(<TreeNode key={c.id + index + i + Math.random(0, 1) * 10000} data={c} isExpand={this.props.isExpand} changeColValue={this.changeColValue} isFirst={isFirst} height={height} len={this.props.data.length}/>)
 			}.bind(this));
 		}.bind(this));
         return (

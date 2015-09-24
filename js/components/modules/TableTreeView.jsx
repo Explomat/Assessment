@@ -147,7 +147,7 @@ var TreeNode = React.createClass({
 			ch.forEach(function(c, i){
 				var isFirst = i === 0 ? true : false;
 				var height = isFirst ? ch.length * 35 : 0;
-				childs.push(<TreeNode key={c.id + index + i + Math.random(0, 1)} data={c} isExpand={this.props.isExpand} isFirst={isFirst} height={height} changeColValue={this.changeColValue} expandedNodeId={this.props.expandedNodeId} parentId={this.props.data.id} group={index}/>)
+				childs.push(<TreeNode key={c.id + index + i + Math.random(0, 1) * 10000} data={c} isExpand={this.props.isExpand} isFirst={isFirst} height={height} changeColValue={this.changeColValue} expandedNodeId={this.props.expandedNodeId} parentId={this.props.data.id} group={index}/>)
 			}.bind(this));
 		}.bind(this));
 
