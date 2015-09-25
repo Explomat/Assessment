@@ -21,21 +21,29 @@ var AssessmentActions = {
 		});
 	},
 
-	saveChanges: function(data, callBack) {
+	saveChanges: function(data, resolve, reject) {
 		AssessmentAPI.saveData(data).then(function(_err){
-			if (callBack) callBack(_err);
+			if (reject && _err) reject(_err);
+			else if (resolve) resolve();
 		},
 		function(err){
-			if (callBack) callBack(err);
+			if (reject) reject(err);
 		});
 	},
 
-	sendForApprove: function(callBack){
-		AssessmentAPI.sendForApprove().then(function(_err){
-			if (callBack) callBack(_err);
+	rejectApprove: function(){
+		AppDispatcher.handleAction({
+			actionType: AssessmentConstants.REJECT_APPROVE
+		});
+	},
+
+	sendForApprove: function(data, resolve, reject){
+		AssessmentAPI.sendForApprove(data).then(function(_err){
+			if (reject && _err) reject(_err);
+			else if (resolve) resolve();
 		},
 		function(err){
-			if (callBack) callBack(err);
+			if (reject) reject(err);
 		});
 	}
 }

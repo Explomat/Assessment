@@ -120,7 +120,13 @@ var TreeNode = React.createClass({
 		var raitingClass = firstRaitingVal !== secondRaitingVal ? 'not-equal' : '';
 
 		elems.push(<Node key={len-4} classes={"data" + (len-2)} value={this.props.data.cols[len-4]}/>);
-		elems.push(<EditNode key={len-3} id={this.props.data.id} colNumber={len-3} classes={"data" + (len-1)} isValidClass={raitingClass} value={this.props.data.cols[len-3]} changeColValue={this.changeColValue}/>);
+		if (TableUtils.isEditCol(this.props.data.edit, len-3)){
+			elems.push(<EditNode key={len-3} id={this.props.data.id} colNumber={len-3} classes={"data" + (len-1)} isValidClass={raitingClass} value={this.props.data.cols[len-3]} changeColValue={this.changeColValue}/>);
+		}
+		else {
+			elems.push(<Node key={len-3} classes={"data" + (len-1)} value={this.props.data.cols[len-3]}/>);
+		}
+		
 
 		var firstVal = parseInt(this.props.data.cols[len-2]);
 		var secondVal = parseInt(this.props.data.cols[len-1]);

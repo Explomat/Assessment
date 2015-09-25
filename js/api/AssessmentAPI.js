@@ -8,10 +8,10 @@ module.exports = {
 	},
 
 	saveData: function(data) {
-		return Ajax.sendRequest(Config.url.createPath({action_name: 'saveData'}), JSON.stringify(data), true, null, "POST");
+		return Ajax.sendRequest(Config.url.createPath({action_name: 'saveCollaborators', r: Math.floor(Math.random() * (1000  + 1))}), JSON.stringify(data), true, null, "POST");
 	},
 
-	sendForApprove: function() {
-		return Ajax.sendRequest(Config.url.createPath({action_name: 'sendForApprove', r: Math.floor(Math.random() * (1000  + 1))}));
+	sendForApprove: function(data) {
+		return Ajax.sendRequest(Config.url.createPath({action_name: 'sendForApprove', r: Math.floor(Math.random() * (1000  + 1))}), JSON.stringify(data), true, null, "POST");
 	}
 }

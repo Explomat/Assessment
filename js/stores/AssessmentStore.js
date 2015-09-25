@@ -5,7 +5,7 @@ var AssessmentConstants = require('../constants/AssessmentConstants');
 var extend = require('extend-object');
 var TableUtils = require('../utils/TableUtils');
 
-var _data = {}, _collaborators = [], _subordinates = [];
+var _data = {}, _collaborators = [], _subordinates = [], _isSendApprove = false;
 
 function findElem(id, array){
 	var stack = [];
@@ -28,11 +28,13 @@ function findElem(id, array){
 function loadAssessmentData(data) {
 	_data = data;
 	_collaborators = data.collaborators;
-	var temp = JSON.parse(JSON.stringify(_collaborators));
+	_subordinates = data.subordinates;
+	_isSendApprove = data.isSendForApprove;
+	/*var temp = JSON.parse(JSON.stringify(_collaborators));
 	temp.forEach(function(s){
 		delete s['children'];
 	})
-	_subordinates = temp;
+	_subordinates = temp;*/
 
 	_collaborators.forEach(function(col){
 		TableUtils.calculatePercents(TableUtils.group(col.children));
@@ -70,6 +72,13 @@ function changeValue(id, colNumber, val){
 	}
 }
 
+function rejectApprove(){
+	_isSendApprove = true;
+	_subordinates.forEach(function(s){
+		s.edit = [];
+	});
+}
+
 var AssessmentStore = extend({}, EventEmitter.prototype, {
 
 	getCollaborators: function(){
@@ -90,6 +99,10 @@ var AssessmentStore = extend({}, EventEmitter.prototype, {
 
 	getErrorSaved: function(){
 		return _saved.error;
+	},
+
+	isSendApprove: function(){
+		return _isSendApprove;
 	},
 
 	emitChange: function() {
@@ -115,6 +128,9 @@ AssessmentStore.dispatchToken = AppDispatcher.register(function(payload) {
 			break;
 		case AssessmentConstants.CHANGE_COL_VALUE:
 			changeValue(action.id, action.colNumber, action.value);
+			break;
+		case AssessmentConstants.REJECT_APPROVE:
+			rejectApprove();
 			break;
 		default:
 			return true;

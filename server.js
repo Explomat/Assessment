@@ -36,7 +36,7 @@ function getBoss(userId) {
 	try {
 		var b = OpenDoc(UrlFromDocID(userId)).TopElem.custom_elems.ObtainChildByKey('CodeBoss').value;
 	}
-	catch(e) { alert(e); return  ''; }
+	catch(e) { alert(e); return  null; }
 	return b;
 }
 
@@ -76,7 +76,7 @@ function getData(queryObjects){
 	});
 }
 
-function saveData(queryObjects){
+function saveCollaborators(queryObjects){
 	var collaborators = eval("t="+queryObjects.Body);
 	var errors = [];
 
@@ -91,6 +91,7 @@ function saveData(queryObjects){
 			try {
 				colCard = OpenDoc(UrlFromDocID(Int(ch.id)));
 				colCard.TopElem.custom_elems.ObtainChildByKey('rating_change').value = ch.cols[3];
+				colCard.TopElem.custom_elems.ObtainChildByKey('func_boss_rating_change').value = col.cols[4];
 				colCard.Save();
 			}
 			catch(e){ alert(e); errors.push(ch.cols[0]); }
@@ -102,9 +103,17 @@ function saveData(queryObjects){
 }
 
 function sendForApprove(queryObjects) {
+	var subordinates = eval("t="+queryObjects.Body);
+
+	for (s in subordinates){
+		colCard = OpenDoc(UrlFromDocID(Int(s.id)));
+		colCard.TopElem.custom_elems.ObtainChildByKey('rating_change').value = s.cols[3];
+		colCard.Save();
+	}
+
 	var boss = getBoss(curUserID);
-	var error = 'Не удалось отправить на подтверждение, т.к. нет прямого руководителя!';
-	if (boss == '') return error;
+	var error = 'Нет прямого руководителя!';
+	if (boss == null) return error;
 	try {
 		tools.create_notification(NOTIFICATION_NAME, OpenDoc(UrlFromDocID(Int(boss))).TopElem.id, '', curUserID);
 	}	

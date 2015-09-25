@@ -7,7 +7,8 @@ var TableTreeViewSecond = require('./modules/TableTreeViewSecond');
 function getData() {
 	return {
 		collaborators: AssessmentStore.getCollaborators(),
-		subordinates: AssessmentStore.getSubordinates()
+		subordinates: AssessmentStore.getSubordinates(),
+		isSendApprove: AssessmentStore.isSendApprove()
 	};
 }
 
@@ -84,16 +85,20 @@ var DownMenu = {
 
 	handleApprove: function(){
 		var data = AssessmentStore.getCollaborators();
-		AssessmentActions.saveChanges(data, function(error){
-			if (!error) alert("Изменения сохранены!");
-			else alert("Изменения не удалось сохранить : \r\n " + error);
+		AssessmentActions.saveChanges(data, function() {
+			alert("Изменения сохранены!");
+		}, function(error){
+			alert("Изменения не удалось сохранить : \r\n " + error);
 		});
 	},
 
 	handleSendForApprove: function(){
-		AssessmentActions.sendForApprove(function(error){
-			if (!error) alert("Уведомление о подтверждении отправлено!");
-			else alert("Уведомление о подтверждении отправить не удалось : \r\n " + error);
+		var data = AssessmentStore.getSubordinates();
+		AssessmentActions.sendForApprove(data, function() {
+			alert("Уведомление о подтверждении отправлено!");
+			AssessmentActions.rejectApprove();
+		}, function(error){
+			alert("Уведомление о подтверждении отправить не удалось : \r\n " + error);
 		});
 	},
 
@@ -179,9 +184,10 @@ var AssessmentView = React.createClass({
 		this.setState({expandedNodeId: parentId});
 	},
 
-	render:function () {
+	render: function () {
 		var isDisplayFirstTableStyle = { display : this.state.isDisplayFirstTable ? "block" : "none" };
 		var isDisplaySecondTableStyle = { display : this.state.isDisplaySecondTable ? "block" : "none" };
+		var isDisplayDownMenuFirst = {  display : this.state.isDisplayFirstTable && !this.state.isSendApprove ? "block": "none" }
 		var bossType = AssessmentStore.getBossType();
 		return (
 			<div className="panel panel-default">
@@ -197,7 +203,7 @@ var AssessmentView = React.createClass({
 					</div>
 				</div>
 				<div className="panel-footer clearfix">
-					<div style={isDisplayFirstTableStyle}>
+					<div style={isDisplayDownMenuFirst}>
 						<DownMenuFirst />
 					</div>
 					<div style={isDisplaySecondTableStyle}>
