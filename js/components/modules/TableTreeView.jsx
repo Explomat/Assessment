@@ -7,7 +7,7 @@ var GroupNode = React.createClass({
 	render: function(){
 		var cl = this.props.isFirst ? 'sadomia' : '';
 		return(
-			<li className={this.props.classes + " " + this.props.classesForA}>
+			<li className={this.props.classes}>
 				<a style={{'height':this.props.height}} className={cl + " " + this.props.classesForA}><span className='inner-sadomia'>{this.props.value}</span></a>
 			</li>
 		);
@@ -110,10 +110,10 @@ var TreeNode = React.createClass({
 
     	for (var i = 1; i < len - 4; i++) {
 			if (TableUtils.isEditCol(this.props.data.edit, i) && !this.props.data.children){
-				elems.push(<EditNode key={i} id={this.props.data.id} colNumber={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]} changeColValue={this.changeColValue}/>);
+				elems.push(<EditNode key={i} id={this.props.data.id} colNumber={i} classes={"data" + (i + 2)} value={this.props.data.cols[i]} changeColValue={this.changeColValue}/>);
 			}
 			else {
-				elems.push(<Node key={i} classes={classes + " data" + (i + 2)} value={this.props.data.cols[i]}/>);
+				elems.push(<Node key={i} classes={"data" + (i + 2)} value={this.props.data.cols[i]}/>);
 			}
 		}
 
@@ -121,24 +121,24 @@ var TreeNode = React.createClass({
 		var secondRaitingVal = parseInt(this.props.data.cols[len-3]) || 0;
 		var raitingClass = firstRaitingVal !== secondRaitingVal && !this.props.data.children ? 'not-equal' : '';
 
-		elems.push(<Node key={len-4} classes={classes + " data" + (len-2)} value={this.props.data.cols[len-4]}/>);
+		elems.push(<Node key={len-4} classes={"data" + (len-2)} value={this.props.data.cols[len-4]}/>);
 		if (TableUtils.isEditCol(this.props.data.edit, len-3) && !this.props.data.children){
-			elems.push(<EditNode key={len-3} id={this.props.data.id} colNumber={len-3} classes={classes + " data" + (len-1)} isValidClass={raitingClass} value={this.props.data.cols[len-3]} changeColValue={this.changeColValue}/>);
+			elems.push(<EditNode key={len-3} id={this.props.data.id} colNumber={len-3} classes={"data" + (len-1)} isValidClass={raitingClass} value={this.props.data.cols[len-3]} changeColValue={this.changeColValue}/>);
 		}
 		else {
-			elems.push(<Node key={len-3} classes={classes + " data" + (len-3) + " " + raitingClass} value={this.props.data.cols[len-3]}/>);
+			elems.push(<Node key={len-3} classes={"data" + (len-3) + " " + raitingClass} value={this.props.data.cols[len-3]}/>);
 		}
 
 		if (!this.props.data.children){
 			var firstVal = parseInt(this.props.data.cols[len - 2]);
 			var secondVal = parseInt(this.props.data.cols[len - 1]);
 			var firstClass = firstVal > secondVal ? 'over' : '';
-			elems.push(<GroupNode key={len-2} classes={classes + " data" + len} classesForA = {firstClass} value={firstVal+"%"} isFirst={isFirst} height={height}/>);
-			elems.push(<GroupNode key={len-1} classes={classes + " data" + (len + 1)} value={secondVal+"%"} isFirst={isFirst} height={height}/>);
+			elems.push(<GroupNode key={len-2} classes={"data" + len} classesForA = {firstClass} value={firstVal+"%"} isFirst={isFirst} height={height}/>);
+			elems.push(<GroupNode key={len-1} classes={"data" + (len + 1)} value={secondVal+"%"} isFirst={isFirst} height={height}/>);
 		}
 		else {
-			elems.push(<Node key={len-2} classes={classes + " data" + len} value={""} />);
-			elems.push(<Node key={len-1} classes={classes + " data" + (len+1)} value={""} />);
+			elems.push(<Node key={len-2} classes={"data" + len} value={""} />);
+			elems.push(<Node key={len-1} classes={"data" + (len+1)} value={""} />);
 		}
 
 		var children = TableUtils.group(this.state.children);
@@ -147,7 +147,7 @@ var TreeNode = React.createClass({
 			ch.forEach(function(c, i){
 				var isFirst = i === 0 ? true : false;
 				var height = isFirst ? ch.length * 35 : 0;
-				childs.push(<TreeNode key={c.id + index + i + Math.random(0, 1)} data={c} isExpand={this.props.isExpand} isFirst={isFirst} height={height} changeColValue={this.changeColValue} expandedNodeId={this.props.expandedNodeId} parentId={this.props.data.id} group={index}/>)
+				childs.push(<TreeNode key={c.id + index + i + Math.random(0, 1) * 10000} data={c} isExpand={this.props.isExpand} isFirst={isFirst} height={height} changeColValue={this.changeColValue} expandedNodeId={this.props.expandedNodeId} parentId={this.props.data.id} group={index}/>)
 			}.bind(this));
 		}.bind(this));
 
