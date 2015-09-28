@@ -1,7 +1,7 @@
 var React = require('react/addons');
 var TextView = require('./Text').TextView;
 var TableUtils = require('../../utils/TableUtils');
-var MAX_ELEMS = 4;
+var MAX_ELEMS = 5;
 
 var GroupNode = React.createClass({
 
@@ -124,8 +124,8 @@ var TreeNode = React.createClass({
     		elems.push(<Node key={values.bossRaiting.key} classes={"data" + (values.bossRaiting.key + 1)} value={values.bossRaiting.value}/>);
     	}
 		
-		elems.push(<GroupNode key={values.factAllocation.key} classes={"data" + (values.factAllocation.key + 1)} classesForA = {firstClass} value={values.factAllocation.value+"%"} isFirst={isFirst} height={height}/>);
-		elems.push(<GroupNode key={values.normAllocation.key} classes={"data" + (values.normAllocation.key + 1)} value={values.normAllocation.value+"%"} isFirst={isFirst} height={height}/>)
+		elems.push(<GroupNode key={values.factAllocation.key} classes={"data" + (values.factAllocation.key + 1)} classesForA = {firstClass} value={values.factAllocation.value.toFixed()+"%"} isFirst={isFirst} height={height}/>);
+		elems.push(<GroupNode key={values.normAllocation.key} classes={"data" + (values.normAllocation.key + 1)} value={values.normAllocation.value.toFixed()+"%"} isFirst={isFirst} height={height}/>)
 
         return (
         	<div className="raiting-table__body">

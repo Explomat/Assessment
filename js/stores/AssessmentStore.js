@@ -33,7 +33,7 @@ function loadAssessmentData(data) {
 	/*var temp = JSON.parse(JSON.stringify(_collaborators));
 	temp.forEach(function(s){
 		delete s['children'];
-	})
+	});
 	_subordinates = temp;*/
 
 	_collaborators.forEach(function(col){

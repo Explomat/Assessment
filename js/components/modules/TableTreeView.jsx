@@ -1,6 +1,7 @@
 var React = require('react/addons');
 var TextView = require('./Text').TextView;
 var TableUtils = require('../../utils/TableUtils');
+var LINE_HEIGHT = 35;
 
 var GroupNode = React.createClass({
 
@@ -102,43 +103,34 @@ var TreeNode = React.createClass({
             'closed': (this.state.children ? false : true)
         });
 
-    	var name = this.props.data.cols[0];
+        var values = {
+        	name: { key: 0, value: this.props.data.cols[0] },
+        	groupRaiting: { key: 1, value: this.props.data.cols[1] },
+        	systemRaiting: { key: 2, value: this.props.data.cols[2] },
+        	bossRaiting: { key: 3, value: this.props.data.cols[3] },
+        	factAllocation: { key: 4, value: this.props.data.cols[4] },
+        	normAllocation: { key: 5, value: this.props.data.cols[5] }
+        }
+
+        var raitingClass = parseInt(values.bossRaiting.value) !== parseInt(values.systemRaiting.value) && !this.props.data.children ? 'not-equal' : '';
+
     	var len = this.props.data.cols.length;
     	var isFirst = this.props.isFirst || false;
     	var height = this.props.height || 0;
     	var elems = [];
 
-    	for (var i = 1; i < len - 4; i++) {
-			if (TableUtils.isEditCol(this.props.data.edit, i) && !this.props.data.children){
-				elems.push(<EditNode key={i} id={this.props.data.id} colNumber={i} classes={"data" + (i + 2)} value={this.props.data.cols[i]} changeColValue={this.changeColValue}/>);
-			}
-			else {
-				elems.push(<Node key={i} classes={"data" + (i + 2)} value={this.props.data.cols[i]}/>);
-			}
-		}
-
-		var firstRaitingVal = parseInt(this.props.data.cols[len-4]) || 0;
-		var secondRaitingVal = parseInt(this.props.data.cols[len-3]) || 0;
-		var raitingClass = firstRaitingVal !== secondRaitingVal && !this.props.data.children ? 'not-equal' : '';
-
-		elems.push(<Node key={len-4} classes={"data" + (len-2)} value={this.props.data.cols[len-4]}/>);
-		if (TableUtils.isEditCol(this.props.data.edit, len-3) && !this.props.data.children){
-			elems.push(<EditNode key={len-3} id={this.props.data.id} colNumber={len-3} classes={"data" + (len-1)} isValidClass={raitingClass} value={this.props.data.cols[len-3]} changeColValue={this.changeColValue}/>);
-		}
-		else {
-			elems.push(<Node key={len-3} classes={"data" + (len-3) + " " + raitingClass} value={this.props.data.cols[len-3]}/>);
-		}
+    	elems.push(<Node key={values.groupRaiting.key} classes={"data" + (values.groupRaiting.key + 1)} value={values.groupRaiting.value}/>);
+    	elems.push(<Node key={values.systemRaiting.key} classes={"data" + (values.systemRaiting.key + 1)} value={values.systemRaiting.value}/>);
+    	elems.push(<Node key={values.bossRaiting.key} classes={"data" + (values.bossRaiting.key + 1) + " " + raitingClass} value={values.bossRaiting.value}/>);
 
 		if (!this.props.data.children){
-			var firstVal = parseInt(this.props.data.cols[len - 2]);
-			var secondVal = parseInt(this.props.data.cols[len - 1]);
-			var firstClass = firstVal > secondVal ? 'over' : '';
-			elems.push(<GroupNode key={len-2} classes={"data" + len} classesForA = {firstClass} value={firstVal+"%"} isFirst={isFirst} height={height}/>);
-			elems.push(<GroupNode key={len-1} classes={"data" + (len + 1)} value={secondVal+"%"} isFirst={isFirst} height={height}/>);
+			var firstClass = parseInt(values.factAllocation.value) > parseInt(values.normAllocation.value) ? 'over' : '';
+			elems.push(<GroupNode key={values.factAllocation.key} classes={"data" + (values.factAllocation.key + 1)} classesForA = {firstClass} value={values.factAllocation.value.toFixed()+"%"} isFirst={isFirst} height={height}/>);
+			elems.push(<GroupNode key={values.normAllocation.key} classes={"data" + (values.normAllocation.key + 1)} value={values.normAllocation.value.toFixed()+"%"} isFirst={isFirst} height={height}/>);
 		}
 		else {
-			elems.push(<Node key={len-2} classes={"data" + len} value={""} />);
-			elems.push(<Node key={len-1} classes={"data" + (len+1)} value={""} />);
+			elems.push(<Node key={values.factAllocation.key} classes={"data" + (values.factAllocation.key + 1)} value={""} />);
+			elems.push(<Node key={values.normAllocation.key} classes={"data" + (values.normAllocation.key + 1)} value={""} />);
 		}
 
 		var children = TableUtils.group(this.state.children);
@@ -146,7 +138,7 @@ var TreeNode = React.createClass({
 		children.forEach(function(ch, index){
 			ch.forEach(function(c, i){
 				var isFirst = i === 0 ? true : false;
-				var height = isFirst ? ch.length * 35 : 0;
+				var height = isFirst ? ch.length * LINE_HEIGHT : 0;
 				childs.push(<TreeNode key={c.id + index + i + Math.random(0, 1) * 10000} data={c} isExpand={this.props.isExpand} isFirst={isFirst} height={height} changeColValue={this.changeColValue} expandedNodeId={this.props.expandedNodeId} parentId={this.props.data.id} group={index}/>)
 			}.bind(this));
 		}.bind(this));
@@ -154,7 +146,7 @@ var TreeNode = React.createClass({
         return (
         	<div className="raiting-table__body">
         		<ul className="raiting-table__row">
-        			<li key={0} className={classes + " data1"} onClick={this.onChildDisplayToggle}><a>{name}</a></li>
+        			<li key={values.name.key} className={classes + " data1"} onClick={this.onChildDisplayToggle}><a>{values.name.value}</a></li>
 		            {elems}
 	            </ul>
                 <div>
