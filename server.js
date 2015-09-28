@@ -1,5 +1,6 @@
 <%
-var NOTIFICATION_NAME = "Assessment_Notification";
+var SEND_FOR_APPROVE_NOTIFICATION = "Assessment_Notification";
+var APPROVE_NOTIFICATION = "Assessment_Approve_Notification";
 
 function _stringifyWT(obj) {
 	var type = DataType(obj);
@@ -32,7 +33,7 @@ function _stringifyWT(obj) {
 	return outStr;
 }
 
-function _sendForApprove(userId){
+function _saveForApprove(userId){
 	var newApproveDoc = OpenNewDoc('x-local://udt/udt_cc_miratorg_send_for_approve.xmd' );
 	newApproveDoc.collaborator_id = userId;
 	newApproveDoc.BindToDb(DefaultDb);
@@ -40,7 +41,7 @@ function _sendForApprove(userId){
 }
 
 function _isSendForApprove(userId){
-	return  ArrayCount(XQuery("sql:select collaborator_id from cc_miratorg_send_for_approve where collaborator_id="+userId)) == 1;
+	return ArrayCount(XQuery("sql:select collaborator_id from cc_miratorg_send_for_approve where collaborator_id="+userId)) == 1;
 }
 
 function _saveData(collaborators) {
@@ -75,6 +76,12 @@ function _getBoss(userId) {
 	}
 	catch(e) { alert(e); return  null; }
 	return b;
+}
+
+function _sendApproveNotifications(users){
+	for(user in users){
+		tools.create_notification(APPROVE_NOTIFICATION, user.id);
+	}
 }
 
 function _getQuery(userId, bossType){
@@ -128,19 +135,28 @@ function saveCollaborators(queryObjects){
 	}
 }
 
+function approve(queryObjects){
+	var collaborators = eval("t="+queryObjects.Body);
+	var errors = _saveData(collaborators);
+	if (errors != null) {
+		return errors;
+	}
+	_sendApproveNotifications(collaborators);
+}
+
 function sendForApprove(queryObjects) {
 	var collaborators = eval("t="+queryObjects.Body);
 	var errors = _saveData(collaborators);
 
 	if (!_isSendForApprove(curUserID)){
-		_sendForApprove(curUserID);
+		_saveForApprove(curUserID);
 	}
 
 	var boss = _getBoss(curUserID);
 	var error = 'Нет прямого руководителя!';
 	if (boss == null) return error;
 	try {
-		tools.create_notification(NOTIFICATION_NAME, OpenDoc(UrlFromDocID(Int(boss))).TopElem.id, '', curUserID);
+		tools.create_notification(SEND_FOR_APPROVE_NOTIFICATION, OpenDoc(UrlFromDocID(Int(boss))).TopElem.id, '', curUserID);
 	}	
 	catch(e) {
 		errors = errors == null ? '' : errors; 
