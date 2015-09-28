@@ -109,7 +109,8 @@ var TreeNode = React.createClass({
         	normAllocation: { key: 6, value: this.props.data.cols[6] }
         }
 
-        var raitingClass = parseInt(values.systemRaiting.value) !== parseInt(values.bossRaiting.value) ? 'not-equal' : '';
+        var raitingGroupClass = parseInt(values.systemRaiting.value) !== parseInt(values.bossRaiting.value) ? 'not-equal' : '';
+        var raitingBossClass = parseInt(values.bossRaiting.value) !== parseInt(values.funcBossRaiting.value) ? 'not-equal' : '';
         var firstClass = parseInt(values.factAllocation.value) > parseInt(values.normAllocation.value) && this.props.len > MAX_ELEMS && TableUtils.isItemInThirdGroup(this.props.data) ? 'over' : '';
 
     	var isFirst = this.props.isFirst || false;
@@ -119,13 +120,13 @@ var TreeNode = React.createClass({
     	elems.push(<Node key={values.groupRaiting.key} classes={"data" + (values.groupRaiting.key + 1)} value={values.groupRaiting.value}/>);
     	elems.push(<Node key={values.systemRaiting.key} classes={"data" + (values.systemRaiting.key + 1)} value={values.systemRaiting.value}/>);
     	if (TableUtils.isEditCol(this.props.data.edit, values.bossRaiting.key)){
-    		elems.push(<EditNode key={values.bossRaiting.key} id={this.props.data.id} colNumber={values.bossRaiting.key} classes={"data" + (values.bossRaiting.key + 1)} isValidClass={raitingClass} value={values.bossRaiting.value} changeColValue={this.changeColValue}/>);
+    		elems.push(<EditNode key={values.bossRaiting.key} id={this.props.data.id} colNumber={values.bossRaiting.key} classes={"data" + (values.bossRaiting.key + 1)} isValidClass={raitingGroupClass} value={values.bossRaiting.value} changeColValue={this.changeColValue}/>);
     	}
     	else {
     		elems.push(<Node key={values.bossRaiting.key} classes={"data" + (values.bossRaiting.key + 1)} value={values.bossRaiting.value}/>);
     	}
 		
-		elems.push(<Node key={values.funcBossRaiting.key} classes={"data" + (values.funcBossRaiting.key + 1)} value={values.funcBossRaiting.value}/>);
+		elems.push(<Node key={values.funcBossRaiting.key} classes={"data" + (values.funcBossRaiting.key + 1) + " " + raitingBossClass} value={values.funcBossRaiting.value}/>);
 		elems.push(<GroupNode key={values.factAllocation.key} classes={"data" + (values.factAllocation.key + 1)} classesForA = {firstClass} value={values.factAllocation.value+"%"} isFirst={isFirst} height={height}/>);
 		elems.push(<GroupNode key={values.normAllocation.key} classes={"data" + (values.normAllocation.key + 1)} value={values.normAllocation.value+"%"} isFirst={isFirst} height={height}/>)
 
