@@ -9,7 +9,9 @@ var GroupNode = React.createClass({
 		var cl = this.props.isFirst ? 'sadomia' : '';
 		return(
 			<li className={this.props.classes}>
-				<a style={{'height':this.props.height}} className={cl + " " + this.props.classesForA}><span className='sadomia2'>{this.props.value}</span></a>
+				<a style={{'height': this.props.height}} className={cl + " " + this.props.classesForA}>
+					<span className='sadomia2'>{this.props.value}</span>
+				</a>
 			</li>
 		);
 	}

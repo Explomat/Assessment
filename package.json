@@ -10,7 +10,7 @@
     "build-jsx": "jsx js/components --extension jsx js/components",
     "build-css": "npm run nsp-css && npm run min-selector-css",
     "min-css": "cat style/added-style.css style/treeview.css style/style.css style/raiting_table.css style/bootstrap.min.css | cleancss -o style/style.min.css",
-    "min-selector-css":"cat style/added-style.css style/treeview.selector.css style/style.selector.css style/raiting_table.selector.css  style/bootstrap.min.css | cleancss -o style/style.min.css && rm -rf style/*selector.css",
+    "min-selector-css":"cat style/added-style.css style/treeview.selector.css style/style.selector.css style/raiting_table.selector.css  style/bootstrap.min.css | cleancss -o build/style/style.min.css && rm -rf style/*selector.css",
     "nsp-css": "namespace-css style/raiting_table.css --selector #assessment_miratorg -o style/raiting_table.selector.css && namespace-css style/style.css --selector #assessment_miratorg -o style/style.selector.css && namespace-css style/treeview.css --selector #assessment_miratorg -o style/treeview.selector.css",
     "start": "node node_modules/webserver/webserver.js",
     "install-packages": "npm install es6-promise & npm install extend-object & npm install flux & npm install react & npm install webserver"
