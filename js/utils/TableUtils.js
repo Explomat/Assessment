@@ -45,16 +45,16 @@ function calculatePercents(groups) {
 	var onePercent = 100 / len;
 
 	firstGroup.forEach(function(item){
-		item.cols[5] = 20;
-		item.cols[4] = onePercent * firstGroup.length;
+		item.cols[6] = 20;
+		item.cols[5] = (onePercent * firstGroup.length).toFixed();
 	});
 	secondGroup.forEach(function(item){
-		item.cols[5] = 60;
-		item.cols[4] = onePercent * secondGroup.length;
+		item.cols[6] = 60;
+		item.cols[5] = (onePercent * secondGroup.length).toFixed();
 	});
 	thirdGroup.forEach(function(item){
-		item.cols[5] = 20;
-		item.cols[4] = onePercent * thirdGroup.length;
+		item.cols[6] = 20;
+		item.cols[5] = (onePercent * thirdGroup.length).toFixed();
 	});
 }
 

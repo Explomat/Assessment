@@ -125,8 +125,8 @@ var TreeNode = React.createClass({
 
 		if (!this.props.data.children){
 			var firstClass = parseInt(values.factAllocation.value) > parseInt(values.normAllocation.value) ? 'over' : '';
-			elems.push(<GroupNode key={values.factAllocation.key} classes={"data" + (values.factAllocation.key + 1)} classesForA = {firstClass} value={values.factAllocation.value.toFixed()+"%"} isFirst={isFirst} height={height}/>);
-			elems.push(<GroupNode key={values.normAllocation.key} classes={"data" + (values.normAllocation.key + 1)} value={values.normAllocation.value.toFixed()+"%"} isFirst={isFirst} height={height}/>);
+			elems.push(<GroupNode key={values.factAllocation.key} classes={"data" + (values.factAllocation.key + 1)} classesForA = {firstClass} value={values.factAllocation.value+"%"} isFirst={isFirst} height={height}/>);
+			elems.push(<GroupNode key={values.normAllocation.key} classes={"data" + (values.normAllocation.key + 1)} value={values.normAllocation.value+"%"} isFirst={isFirst} height={height}/>);
 		}
 		else {
 			elems.push(<Node key={values.factAllocation.key} classes={"data" + (values.factAllocation.key + 1)} value={""} />);
