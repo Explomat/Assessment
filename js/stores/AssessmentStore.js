@@ -5,7 +5,7 @@ var AssessmentConstants = require('../constants/AssessmentConstants');
 var extend = require('extend-object');
 var TableUtils = require('../utils/TableUtils');
 
-var _data = {}, _collaborators = [], _subordinates = [], _isSendApprove = false;
+var _data = {}, _collaborators = [], _subordinates = [], _isSendForApprove = false;
 
 function findElem(id, array){
 	var stack = [];
@@ -29,7 +29,7 @@ function loadAssessmentData(data) {
 	_data = data;
 	_collaborators = data.collaborators;
 	_subordinates = data.subordinates;
-	_isSendApprove = data.isSendForApprove;
+	_isSendForApprove = data.isSendForApprove;
 	/*var temp = JSON.parse(JSON.stringify(_collaborators));
 	temp.forEach(function(s){
 		delete s['children'];
@@ -73,7 +73,7 @@ function changeValue(id, colNumber, val){
 }
 
 function rejectApprove(){
-	_isSendApprove = true;
+	_isSendForApprove = true;
 	_subordinates.forEach(function(s){
 		s.edit = [];
 	});
@@ -102,7 +102,7 @@ var AssessmentStore = extend({}, EventEmitter.prototype, {
 	},
 
 	isSendApprove: function(){
-		return _isSendApprove;
+		return _isSendForApprove;
 	},
 
 	emitChange: function() {

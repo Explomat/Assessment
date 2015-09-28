@@ -8,7 +8,7 @@ function getData() {
 	return {
 		collaborators: AssessmentStore.getCollaborators(),
 		subordinates: AssessmentStore.getSubordinates(),
-		isSendApprove: AssessmentStore.isSendApprove()
+		isSendForApprove: AssessmentStore.isSendApprove()
 	};
 }
 
@@ -187,7 +187,7 @@ var AssessmentView = React.createClass({
 	render: function () {
 		var isDisplayFirstTableStyle = { display : this.state.isDisplayFirstTable ? "block" : "none" };
 		var isDisplaySecondTableStyle = { display : this.state.isDisplaySecondTable ? "block" : "none" };
-		var isDisplayDownMenuFirst = {  display : this.state.isDisplayFirstTable && !this.state.isSendApprove ? "block": "none" }
+		var isDisplayDownMenuFirst = {  display : this.state.isDisplayFirstTable && !this.state.isSendForApprove ? "block": "none" }
 		var bossType = AssessmentStore.getBossType();
 		return (
 			<div className="panel panel-default">
@@ -199,7 +199,7 @@ var AssessmentView = React.createClass({
 						<TableTreeViewSecond data={this.state.subordinates} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг системы', 'Рейтинг руководителя', 'Рейтинг вышестоящего руководителя', 'Факт распределения', 'Норма распределения']}/>
 					</div>
 					<div style={isDisplaySecondTableStyle}>
-						<TableTreeView data={this.state.collaborators} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг системы', 'Рейтинг руководителя', 'Факт распределения', 'Норма распределения']} expandedNodeId={this.state.expandedNodeId}/>
+						<TableTreeView data={this.state.collaborators} changeValue={this.changeTreeValue} isExpand={this.state.isExpand} header={['ФИО', 'Группа Рейтинга', 'Рейтинг системы', 'Рейтинг руководителя', 'Рейтинг вышестоящего руководителя', 'Факт распределения', 'Норма распределения']} expandedNodeId={this.state.expandedNodeId}/>
 					</div>
 				</div>
 				<div className="panel-footer clearfix">
