@@ -1,17 +1,25 @@
 var Config = require('../config');
 var Ajax = require('../utils/Ajax');
 
+function getRandomNumber(){
+	return Math.floor(Math.random() * (1000 + 1));
+}
+
 module.exports = {
 
 	getData: function() {
-		return Ajax.sendRequest(Config.url.createPath({action_name: 'getData', r: Math.floor(Math.random() * (1000 + 1))}));
+		return Ajax.sendRequest(Config.url.createPath({action_name: 'getData', r: getRandomNumber()}));
 	},
 
 	saveData: function(data) {
-		return Ajax.sendRequest(Config.url.createPath({action_name: 'saveCollaborators', r: Math.floor(Math.random() * (1000  + 1))}), JSON.stringify(data), true, null, "POST");
+		return Ajax.sendRequest(Config.url.createPath({action_name: 'saveCollaborators', r: getRandomNumber()}), JSON.stringify(data), true, null, "POST");
+	},
+
+	approve: function (data) {
+		return Ajax.sendRequest(Config.url.createPath({action_name: 'approve', r: getRandomNumber()}), JSON.stringify(data), true, null, "POST");
 	},
 
 	sendForApprove: function(data) {
-		return Ajax.sendRequest(Config.url.createPath({action_name: 'sendForApprove', r: Math.floor(Math.random() * (1000  + 1))}), JSON.stringify(data), true, null, "POST");
+		return Ajax.sendRequest(Config.url.createPath({action_name: 'sendForApprove', r: getRandomNumber()}), JSON.stringify(data), true, null, "POST");
 	}
 }

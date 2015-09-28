@@ -83,28 +83,18 @@ var TopMenu = React.createClass({
 
 var DownMenu = {
 
-	handleApprove: function(){
+	handleSave: function () {
 		var data = AssessmentStore.getCollaborators();
 		AssessmentActions.saveChanges(data, function() {
-			alert("Изменения сохранены!");
+			alert("Изменения успешно сохранены!");
 		}, function(error){
 			alert("Изменения не удалось сохранить : \r\n " + error);
 		});
 	},
 
-	handleSendForApprove: function(){
-		var data = AssessmentStore.getSubordinates();
-		AssessmentActions.sendForApprove(data, function() {
-			alert("Уведомление о подтверждении отправлено!");
-			AssessmentActions.rejectApprove();
-		}, function(error){
-			alert("Уведомление о подтверждении отправить не удалось : \r\n " + error);
-		});
-	},
-
 	getBaseMark: function() {
 		return (
-			<button type="button" className="btn btn-default btn-sm" onClick={this.handleApprove}>
+			<button type="button" className="btn btn-default btn-sm" onClick={this.handleSave}>
 				<span>Сохранить изменения</span>
 			</button>
 		);
@@ -114,6 +104,16 @@ var DownMenu = {
 var DownMenuFirst = React.createClass({
 
 	mixins: [DownMenu],
+
+	handleSendForApprove: function(){
+		var data = AssessmentStore.getCollaborators();
+		AssessmentActions.sendForApprove(data, function() {
+			alert("Уведомление о подтверждении отправлено!");
+			AssessmentActions.rejectApprove();
+		}, function(error){
+			alert("Произошла ошибка : \r\n " + error);
+		});
+	},
 
 	render: function() {
 		return (
@@ -130,6 +130,15 @@ var DownMenuFirst = React.createClass({
 var DownMenuSecond = React.createClass({
 
 	mixins: [DownMenu],
+
+	handleApprove: function(){
+		var data = AssessmentStore.getCollaborators();
+		AssessmentActions.approve(data, function() {
+			alert("Изменения сохранены и отправлены на подтверждение!");
+		}, function(error){
+			alert("Произошла ошибка : \r\n " + error);
+		});
+	},
 
 	render: function() {
 		return (
@@ -154,8 +163,7 @@ var AssessmentView = React.createClass({
 	},
 
 	_onChange: function() {
-		var data = getData();
-		this.setState(data);
+		this.setState(getData());
 	},
 
 	getInitialState: function () {

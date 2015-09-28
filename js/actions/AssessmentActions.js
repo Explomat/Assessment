@@ -37,6 +37,16 @@ var AssessmentActions = {
 		});
 	},
 
+	approve: function(data, resolve, reject){
+		AssessmentAPI.approve(data).then(function(_err){
+			if (reject && _err) reject(_err);
+			else if (resolve) resolve();
+		},
+		function(err){
+			if (reject) reject(err);
+		});
+	},
+
 	sendForApprove: function(data, resolve, reject){
 		AssessmentAPI.sendForApprove(data).then(function(_err){
 			if (reject && _err) reject(_err);
