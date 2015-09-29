@@ -7,9 +7,10 @@ var GroupNode = React.createClass({
 
 	render: function(){
 		var cl = this.props.isFirst ? 'sadomia' : '';
+		var val = this.props.isFirst ? this.props.value : '';
 		return(
 			<li className={this.props.classes}>
-				<a style={{'height':this.props.height}} className={cl + " " + this.props.classesForA}><span className='inner-sadomia'>{this.props.value}</span></a>
+				<a style={{'height':this.props.height}} className={cl + " " + this.props.classesForA}><span className='inner-sadomia'>{val}</span></a>
 			</li>
 		);
 	}});

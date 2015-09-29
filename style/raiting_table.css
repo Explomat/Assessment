@@ -106,6 +106,15 @@ input.form-control{
 	width: 100%;
 	background: #55Dc55;
 }
+
+.raiting-table__row .normal{
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	display: table;
+	width: 100%;
+}
+
 .raiting-table__row li>input.not-equal, .raiting-table__row li.not-equal{
 	background-color: #FFDA57;
 	border: 1px solid #FFF;
