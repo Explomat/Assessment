@@ -16,7 +16,7 @@ module.exports = {
 	},
 
 	approve: function (data) {
-		return Ajax.sendRequest(Config.url.createPath({action_name: 'approve', r: getRandomNumber()}), JSON.stringify(data), true, null, "POST");
+		return Ajax.sendRequest(Config.url.createPath({action_name: 'createApprove', r: getRandomNumber()}), JSON.stringify(data), true, null, "POST");
 	},
 
 	sendForApprove: function(data) {

@@ -113,7 +113,7 @@ var TreeNode = React.createClass({
         }
 
         var raitingGroupClass = parseInt(values.systemRaiting.value) !== parseInt(values.bossRaiting.value) ? 'not-equal' : '';
-        var raitingBossClass = parseInt(values.systemRaiting.value) !== parseInt(values.funcBossRaiting.value) ? 'not-equal' : '';
+        var raitingBossClass = parseInt(values.systemRaiting.value) !== parseInt(values.funcBossRaiting.value) && values.funcBossRaiting.value !== '' ? 'not-equal' : '';
         var firstClass = parseInt(values.factAllocation.value) > parseInt(values.normAllocation.value) && this.props.len > MAX_ELEMS && TableUtils.isItemInThirdGroup(this.props.data) ? 'over' : '';
 
     	var isFirst = this.props.isFirst || false;

@@ -33,15 +33,15 @@ function _stringifyWT(obj) {
 	return outStr;
 }
 
-function _saveForApprove(userId){
+function _newDoc(userId){
 	var newApproveDoc = OpenNewDoc('x-local://udt/udt_cc_miratorg_send_for_approve.xmd' );
-	newApproveDoc.collaborator_id = userId;
+	newApproveDoc.TopElem.collaborator_id = userId;
 	newApproveDoc.BindToDb(DefaultDb);
 	newApproveDoc.Save();
 }
 
-function _isSendForApprove(userId){
-	return ArrayCount(XQuery("sql:select collaborator_id from cc_miratorg_send_for_approve where collaborator_id="+userId)) == 1;
+function _isSend(userId){
+	return ArrayCount(XQuery("sql:select collaborator_id from cc_miratorg_send_for_approves where collaborator_id="+userId)) == 1;
 }
 
 function _saveData(collaborators) {
@@ -49,16 +49,16 @@ function _saveData(collaborators) {
 
 	for (col in collaborators) {
 		try {
-			colCard = OpenDoc(UrlFromDocID(Int(col.id)));
-			colCard.TopElem.custom_elems.ObtainChildByKey('rating_change').value = col.cols[3];
-			colCard.Save();
+			colCardBoss = OpenDoc(UrlFromDocID(Int(col.id)));
+			colCardBoss.TopElem.custom_elems.ObtainChildByKey('rating_change').value = col.cols[3];
+			colCardBoss.Save();
 		}
 		catch(e){ alert(e); errors.push(col.cols[0]); }
 		for (ch in col.children){
 			try {
 				colCard = OpenDoc(UrlFromDocID(Int(ch.id)));
 				colCard.TopElem.custom_elems.ObtainChildByKey('rating_change').value = ch.cols[3];
-				colCard.TopElem.custom_elems.ObtainChildByKey('rating_change_boss').value = col.cols[4];
+				colCard.TopElem.custom_elems.ObtainChildByKey('rating_change_boss').value = ch.cols[4];
 				colCard.Save();
 			}
 			catch(e){ alert(e); errors.push(ch.cols[0]); }
@@ -70,19 +70,6 @@ function _saveData(collaborators) {
 	return null;
 }
 
-function _getBoss(userId) {
-	try {
-		var b = OpenDoc(UrlFromDocID(userId)).TopElem.custom_elems.ObtainChildByKey('CodeBoss').value;
-	}
-	catch(e) { alert(e); return  null; }
-	return b;
-}
-
-function _sendApproveNotifications(users){
-	for(user in users){
-		tools.create_notification(APPROVE_NOTIFICATION, user.id);
-	}
-}
 
 function _getQuery(userId, bossType){
 	return XQuery("sql:select distinct collaborator.id, collaborators.fullname,
@@ -104,15 +91,17 @@ function getData(queryObjects){
 	var bossType = 0;
 	var collaborators = [];
 	var subordinates = [];
-	var isSendApprove = _isSendForApprove(curUserID);
+	var isSended = _isSend(curUserID);
+	var isEditBoss = isSended == true ? [] : [3];
 
 	for (f in _getQuery(userId, codeBoss)){
 		if (f.rating == '' || f.rating == null) continue;
-		boss = { id: f.id + '', cols: [ f.fullname + '', f.rating + '', f.rating + '', f.rating_change + '', f.rating_change_boss + '', "", "" ], edit:[3], children:[]};
+		boss = { id: f.id + '', cols: [ f.fullname + '', f.rating + '', f.rating + '', f.rating_change + '', f.rating_change_boss + '', "", "" ], edit: isEditBoss, children:[]};
 		subordinates.push(boss);
 		for (c in _getQuery(f.id, codeBoss)){
 			if (c.rating == '' || c.rating == null) continue;
-			boss.children.push({ id: c.id + '', cols: [ c.fullname + '', c.rating + '', c.rating + '', c.rating_change + '', f.rating_change_boss + '', "", "" ], edit:[3]});
+			funcBossRating = c.rating_change_boss == '' ? c.rating_change + '' : c.rating_change_boss + '';
+			boss.children.push({ id: c.id + '', cols: [ c.fullname + '', c.rating + '', c.rating + '', c.rating_change + '', funcBossRating, "", "" ], edit:[3]});
 			bossType = 1;
 		}
 		collaborators.push(boss);
@@ -123,7 +112,7 @@ function getData(queryObjects){
 		bossType: bossType,
 		collaborators: collaborators,
 		subordinates: subordinates,
-		isSendForApprove: isSendForApprove
+		isSendForApprove: _isSend(curUserID)
 	});
 }
 
@@ -135,24 +124,26 @@ function saveCollaborators(queryObjects){
 	}
 }
 
-function approve(queryObjects){
+function createApprove(queryObjects){
 	var collaborators = eval("t="+queryObjects.Body);
 	var errors = _saveData(collaborators);
 	if (errors != null) {
 		return errors;
 	}
-	_sendApproveNotifications(collaborators);
+	for(col in collaborators){
+		tools.create_notification(APPROVE_NOTIFICATION, col.id);
+	}
 }
 
 function sendForApprove(queryObjects) {
-	var collaborators = eval("t="+queryObjects.Body);
+	var collaborators = eval("t=" + queryObjects.Body);
 	var errors = _saveData(collaborators);
 
-	if (!_isSendForApprove(curUserID)){
-		_saveForApprove(curUserID);
+	if (!_isSend(curUserID)){
+		_newDoc(curUserID);
 	}
 
-	var boss = _getBoss(curUserID);
+	var boss = OpenDoc(UrlFromDocID(curUserID)).TopElem.custom_elems.ObtainChildByKey('CodeBoss').value;
 	var error = 'Нет прямого руководителя!';
 	if (boss == null) return error;
 	try {

@@ -6,7 +6,7 @@ var AssessmentView = require('./components/AssessmentView');
 window.onload = function () {
 	var app = document.getElementById('app');
 
-	AssessmentActions.receiveData({
+	/*AssessmentActions.receiveData({
 		subordinates: [
 			{
 				"id": 4444,
@@ -162,8 +162,8 @@ window.onload = function () {
 		bossType: 1,
 		isSendForApprove: false
 	});
-	React.render(React.createElement(AssessmentView), app);
-	/*AssessmentAPI.getData().then(function(data){
+	React.render(React.createElement(AssessmentView), app);*/
+	AssessmentAPI.getData().then(function(data){
 		try {
 			AssessmentActions.receiveData(JSON.parse(data));
 			React.render(React.createElement(AssessmentView), app);
@@ -171,5 +171,5 @@ window.onload = function () {
 		catch(e){
 			console.log(e);
 		}
-	});*/
+	});
 }
