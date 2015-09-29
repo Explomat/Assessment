@@ -17,3 +17,28 @@ body {
 #assessment_miratorg {
 	overflow-x: scroll;
 }
+
+#assessment_miratorg{
+    min-width: 900px;
+    font-family:Calibri, Helvetica, serif;
+    font-size: 14px;
+    color:#444;
+    margin:10px auto;
+    border:1px solid #ddd;
+    background:#f6f6f6;
+    -webkit-border-radius:4px;
+       -moz-border-radius:4px;
+            border-radius:4px;
+}
+
+#assessment_miratorg h1 {
+    text-align: center;
+    font-size: 36px;
+    padding: 0;
+}
+
+#assessment_miratorg:after{
+    content: '';
+    display:table;
+    clear:both;
+}
